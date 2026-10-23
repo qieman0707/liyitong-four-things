@@ -158,11 +158,11 @@
 
   App.register({
     id: 'replies', accent: 'fans', demo: 0, name: '评论挑信', tag: '粉丝',
-    short: '几万条评论里，每天挑出最值得你亲自回的几条，草稿起好，你点头才发。',
+    short: '几万条评论里，每天挑出最值得女演员亲自回的几条，草稿起好，女演员点头才发。',
     meta: '每天 5 分钟 · AI 只起草',
-    blurb: '每天替你从几万条评论里，挑出最值得亲自回的几条。',
-    pain: '评论和私信每天上万条，你想回也看不过来。后援会说对接群里常常是「一个人自言自语」，真正需要一句话的人被淹没了。',
-    ai: '每天收工后打开，6 到 8 条已经挑好、草稿起好。你花 5 分钟点头回 1 到 2 条；周末看一眼哪类回复粉丝最开心。',
+    blurb: '每天替女演员从几万条评论里，挑出最值得亲自回的几条。',
+    pain: '评论和私信每天上万条，女演员想回也看不过来。后援会说对接群里常常是「一个人自言自语」，真正需要一句话的人被淹没了。',
+    ai: '每天收工后打开，6 到 8 条已经挑好、草稿起好。女演员花 5 分钟点头回 1 到 2 条；周末看一眼哪类回复粉丝最开心。',
 
     mount(root, ctx) {
       const { $, $$, esc, fmt, store, toast, think, show, modal, go } = ctx;
@@ -289,7 +289,7 @@
           <div class="sec">设置</div>
           <nav><a href="#/replies/settings" class="${sub === 'settings' ? 'on' : ''}">挑选偏好</a></nav>
           </aside>
-        <section class="main"><div id="rp-main"></div><p class="rp-foot">AI 只起草，你点头才进待发；产品不替你发任何一条。页面上所有评论、粉丝名、数字都是演示用假数据。</p></section>
+        <section class="main"><div id="rp-main"></div><p class="rp-foot">AI 只起草，女演员点头才进待发；产品不替女演员发任何一条。页面上所有评论、粉丝名、数字都是演示用假数据。</p></section>
       </div>`;
       const app = $('.rp', root), main = $('#rp-main', root);
 
@@ -327,10 +327,10 @@
         const items = [
           ...sps.map(s => {
             const p = st.picks.find(x => x.cid === s.id), q = st.queue.find(x => x.cid === s.id), h = st.hist.find(x => x.cid === s.id);
-            const stt = h ? '你已回' : q ? '在待发里' : p ? (p.st === 'skip' ? '今天跳过了' : '今天被挑出') : '还在评论池里';
-            return { d: today, t: P(s.t), tr: s.tr, re: h ? '你回：' + h.reply : q ? '草稿：' + q.text : '', tag: stt, hot: true };
+            const stt = h ? '女演员已回' : q ? '在待发里' : p ? (p.st === 'skip' ? '今天跳过了' : '今天被挑出') : '还在评论池里';
+            return { d: today, t: P(s.t), tr: s.tr, re: h ? '女演员回：' + h.reply : q ? '草稿：' + q.text : '', tag: stt, hot: true };
           }),
-          ...recs.filter(h => !h.cid).map(h => ({ d: h.day, t: P(h.text), tr: h.tr, re: '你回：' + P(h.reply), tag: `♥ ${fmt(h.likes)}`, hot: true })),
+          ...recs.filter(h => !h.cid).map(h => ({ d: h.day, t: P(h.text), tr: h.tr, re: '女演员回：' + P(h.reply), tag: `♥ ${fmt(h.likes)}`, hot: true })),
           ...old.map(o => ({ d: o.d, t: P(o.t), tag: '没被挑' })),
         ].sort((a, b) => b.d.localeCompare(a.d));
         const starred = st.stars.includes(name);
@@ -341,7 +341,7 @@
           <div class="grid-3" style="margin-top:16px">
             <div class="kpi"><b>${isReal ? '—' : f[0]}</b><span>陪伴年数</span></div>
             <div class="kpi"><b>${fmt(isReal ? f[2] : f[2] + recs.length)}</b><span>互动次数</span></div>
-            <div class="kpi"><b style="font-size:20px">${last ? agoText(last) : '从没'}</b><span>上次被你回</span></div>
+            <div class="kpi"><b style="font-size:20px">${last ? agoText(last) : '从没'}</b><span>上次被女演员回</span></div>
           </div>
           <div class="eyebrow" style="margin:20px 0 12px">TA 的评论</div>
           <ul class="tl">${items.map(it => `<li class="${it.hot ? 'hot' : ''}"><div class="row between"><span class="d">${esc(agoText(it.d))} · ${esc(it.d.slice(5))}</span><span class="tag">${esc(it.tag)}</span></div>
@@ -412,7 +412,7 @@
         if (p.st === 'queued' || p.st === 'sent') {
           const q = st.queue.find(x => x.cid === s.id), h = st.hist.find(x => x.cid === s.id);
           return `<article class="card pick st-${p.st}" data-i="${i}">${top}${quote}
-            <div class="stamp">${p.st === 'sent' ? `✓ 已标记发出 · ♥ ${fmt(h ? h.likes : 0)} · ↩ ${fmt(h ? h.rep : 0)}（模拟反应）` : '✓ 你点头了，已进待发'}<div style="color:var(--text);margin-top:4px">${esc(h ? h.reply : q ? q.text : draftText(p))}</div></div>
+            <div class="stamp">${p.st === 'sent' ? `✓ 已标记发出 · ♥ ${fmt(h ? h.likes : 0)} · ↩ ${fmt(h ? h.rep : 0)}（模拟反应）` : '✓ 女演员点头了，已进待发'}<div style="color:var(--text);margin-top:4px">${esc(h ? h.reply : q ? q.text : draftText(p))}</div></div>
             <div class="ft">${p.st === 'queued' ? `<a class="btn btn-sm btn-primary" href="#/replies/queue">去待发</a><button class="btn btn-sm btn-ghost" data-act="unqueue">撤回</button>` : `<a class="btn btn-sm" href="#/replies/history">看历史</a>`}</div></article>`;
         }
         const sc = score(s);
@@ -423,7 +423,7 @@
               <div class="row" style="gap:6px"><span class="seg">${['A', 'B'].map((x, k) => `<button class="${p.v === k && p.ed == null ? 'on' : ''}" data-act="ver" data-v="${k}">版本 ${x}</button>`).join('')}</span>
               <span class="seg">${Object.entries(TONES).map(([k, n]) => `<button class="${p.tone === k ? 'on' : ''}" data-act="tone" data-v="${k}">${n}</button>`).join('')}</span></div></div>
             <textarea class="textarea" data-act="edit" aria-label="回复草稿，可以直接改">${esc(draftText(p))}</textarea>
-            ${s.tr ? `<div class="xs muted" style="margin-top:6px">发出时会附上${esc(s.lang || '原文语言的')}译文，你先看中文就行。</div>` : ''}
+            ${s.tr ? `<div class="xs muted" style="margin-top:6px">发出时会附上${esc(s.lang || '原文语言的')}译文，女演员先看中文就行。</div>` : ''}
             ${p.ed != null ? `<button class="btn btn-sm btn-ghost" style="margin-top:8px" data-act="restore">恢复 AI 草稿</button>` : ''}
           </div>
           <div class="ft"><button class="btn btn-sm btn-primary" data-act="ok">就它了</button><button class="btn btn-sm" data-act="swap">换一条</button><button class="btn btn-sm btn-ghost" data-act="skip">跳过</button></div></article>`;
@@ -432,17 +432,17 @@
       const flowHTML = () => {
         const done = [st.ran, st.picks.some(p => p.st === 'queued' || p.st === 'sent'), st.picks.some(p => p.st === 'sent'), false]; // 只看这一批卡片
         const cur = done.indexOf(false);
-        return ['AI 挑好', '你点头', '你亲自发出', '周末看反应'].map((n, i) => `<span class="${done[i] ? 'done' : i === cur ? 'on' : ''}"><i>${done[i] ? '✓' : i + 1}</i>${n}</span>`).join('');
+        return ['AI 挑好', '女演员点头', '女演员亲自发出', '周末看反应'].map((n, i) => `<span class="${done[i] ? 'done' : i === cur ? 'on' : ''}"><i>${done[i] ? '✓' : i + 1}</i>${n}</span>`).join('');
       };
       /* 一眼看：几万条怎么变成几条；今天的评论什么时候来、挑出来的是哪几类时刻 */
       const vizHTML = () => {
         const recv = st.received, kept = Math.round(recv * .58), flagged = Math.max(st.picks.length, Math.round(recv * .0021));
-        const funnel = Viz.funnel([{ l: '今天收到', v: recv }, { l: '去掉控评和重复', v: kept }, { l: 'AI 标记值得看', v: flagged }, { l: '挑给你', v: st.picks.length }, { l: '你亲自回', v: sentToday() }], { w: 460, lw: 110, vw: 110, vw2: 56, c: 'var(--accent)', label: '评论怎么挑出来的' });
+        const funnel = Viz.funnel([{ l: '今天收到', v: recv }, { l: '去掉控评和重复', v: kept }, { l: 'AI 标记值得看', v: flagged }, { l: '挑给女演员', v: st.picks.length }, { l: '女演员亲自回', v: sentToday() }], { w: 460, lw: 110, vw: 110, vw2: 56, c: 'var(--accent)', label: '评论怎么挑出来的' });
         const shape = [1, .6, .4, .3, .3, .4, .8, 1.6, 2.2, 2.4, 2.3, 2.6, 2.8, 2.4, 2.3, 2.4, 2.7, 3.1, 3.6, 4.2, 7.5, 6.8, 4.6, 2.4];
         const hourNow = new Date().getHours(), sum = shape.slice(0, hourNow + 1).reduce((a, b) => a + b, 0) || 1;
         const hours = shape.map((s, i) => i <= hourNow ? Math.round(s / sum * recv) : 0);
         const cats = CAT_KEYS.map(k => ({ l: CATS[k].n, v: st.picks.filter(p => { const s = getS(p.cid); return s && s.c === k; }).length })).filter(x => x.v);
-        return `<div class="viz-card"><div class="vh"><b>${fmt(recv)} 条怎么变成 ${st.picks.length} 条</b><span>只有最后一步是你</span></div>${funnel}<p class="vn">中间两步的数字按今天的量推算；接入 AI 后贴真评论，这里就是真数。</p></div>
+        return `<div class="viz-card"><div class="vh"><b>${fmt(recv)} 条怎么变成 ${st.picks.length} 条</b><span>只有最后一步是女演员</span></div>${funnel}<p class="vn">中间两步的数字按今天的量推算；接入 AI 后贴真评论，这里就是真数。</p></div>
           <div class="viz-card"><div class="vh"><b>评论什么时候来</b><span>每小时 · 到现在 ${hourNow} 点</span></div>${Viz.cols(hours, { w: 460, h: 110, labels: shape.map((_, i) => i % 6 ? '' : i + '点'), hi: 20, hc: 'var(--accent)', c: 'var(--surface3)', label: '今天每小时收到的评论数' })}<p class="vn">20 点更新后是高峰，所以收工后挑最准。</p>
             ${cats.length ? `<div class="vh" style="margin-top:14px"><b>挑出来的是哪几类时刻</b><span>${st.picks.length} 条</span></div>${Viz.stack(cats.map((c, i) => ({ ...c, c: ['var(--accent)', 'var(--c-quiz)', 'var(--c-guard)', 'var(--c-vibe)', 'var(--warn)', 'var(--dim)'][i] })), { w: 460, label: '挑出的评论按类别' })}` : ''}</div>`;
       };
@@ -460,8 +460,8 @@
         }
         const left = st.picks.filter(p => p.st === 'new').length;
         const lead = st.mode === 'real' && st.realStats ? `AI 从贴进来的 <b>${st.realStats.total}</b> 条真评论里挑出` : st.auto ? '收工前 AI 已挑好' : '挑出';
-        show(box, `<p class="doneln">✓ ${lead} <b>${st.picks.length}</b> 条 · 还有 <b>${left}</b> 条等你看 · 语气偏好「${TONES[st.set.tone]}」</p>` + st.picks.map(cardHTML).join('') +
-          `<p class="note">AI 只起草。回不回、怎么改，你说了算；点「就它了」只是放进待发，发出去的仍然是你本人。</p>`);
+        show(box, `<p class="doneln">✓ ${lead} <b>${st.picks.length}</b> 条 · 还有 <b>${left}</b> 条等女演员看 · 语气偏好「${TONES[st.set.tone]}」</p>` + st.picks.map(cardHTML).join('') +
+          `<p class="note">AI 只起草。回不回、怎么改，女演员说了算；点「就它了」只是放进待发，发出去的仍然是女演员本人。</p>`);
       };
 
       async function runPick(btn) {
@@ -498,7 +498,7 @@
           <div class="kpis">
             <div class="kpi"><small>LIVE</small><b id="k-recv" data-v="0">0</b><span>今天收到</span></div>
             <div class="kpi" style="--kc:var(--accent)"><b id="k-pick" data-v="0">0</b><span>AI 挑出</span></div>
-            <div class="kpi" style="--kc:var(--ok)"><b id="k-sent" data-v="0">0</b><span>你已回</span></div>
+            <div class="kpi" style="--kc:var(--ok)"><b id="k-sent" data-v="0">0</b><span>女演员已回</span></div>
             <div class="kpi" style="--kc:var(--warn)"><b id="k-q" data-v="0">0</b><span>待发</span></div>
           </div>
           <div class="steps" id="rp-flow" style="margin-top:14px"></div>
@@ -583,7 +583,7 @@
         const scan = $('#rp-scan', main); scan && scan.classList.add('scan');
         await think(box, [
           `贴进来 ${lines.length} 条，本机去掉屏蔽词 ${blk} 条、重复 ${dup} 条`,
-          `把剩下的 ${rows.length} 条交给 AI（带上你的档案和挑选规则）`,
+          `把剩下的 ${rows.length} 条交给 AI（带上女演员的档案和挑选规则）`,
           '去掉控评模板、广告和空话',
           `找出特别时刻：${cats.map(k => CATS[k].n).join('、')}`,
           '按「回了最暖」排序，每条起草温暖、简短、活泼各两版',
@@ -628,9 +628,9 @@
         save();
       }
       function renderQueue() {
-        main.innerHTML = head('待发', '你点过头的回复。改一改、复制，由你本人去微博发出，再回来标记。',
+        main.innerHTML = head('待发', '女演员点过头的回复。改一改、复制，由女演员本人去微博发出，再回来标记。',
           st.queue.length ? `<button class="btn" data-act="copyall">全部复制</button><button class="btn btn-primary" data-act="sentall">全部标记已发</button>` : '') + `
-          <p class="note" style="margin-bottom:16px">产品不替你发任何一条。「标记已发」只是记一笔：你已经亲自发出去了，这条会进历史，用来统计哪类回复粉丝最开心。</p>
+          <p class="note" style="margin-bottom:16px">产品不替女演员发任何一条。「标记已发」只是记一笔：女演员已经亲自发出去了，这条会进历史，用来统计哪类回复粉丝最开心。</p>
           <div class="stack out" id="rp-q">${st.queue.length ? st.queue.map((q, i) => {
             const s = getS(q.cid);
             return `<article class="card" data-qi="${i}">
@@ -667,7 +667,7 @@
         const totalLikes = H.reduce((a, h) => a + h.likes, 0);
         const list = H.filter(h => (histCat === 'all' || h.cat === histCat) && (!histQ || (h.fan + h.text + h.reply).includes(histQ)));
         const days = [...new Set(list.map(h => h.day))].sort().reverse();
-        main.innerHTML = head('历史', '按天归档你回过的评论，看看哪类回复粉丝最开心。') + `
+        main.innerHTML = head('历史', '按天归档女演员回过的评论，看看哪类回复粉丝最开心。') + `
           <div class="kpis">
             <div class="kpi"><b id="h1" data-v="0">0</b><span>累计回了</span></div>
             <div class="kpi" style="--kc:var(--ok)"><b id="h2" data-v="0">0</b><span>近 7 天</span></div>
@@ -702,7 +702,7 @@
         rows = rows.filter(r => (!fanStar || r.star) && (!fanQ || (r.n + r.from).includes(fanQ)));
         rows.sort((a, b) => fanSort === 'years' ? b.y - a.y : fanSort === 'cnt' ? b.cnt - a.cnt : (b.last || '').localeCompare(a.last || ''));
         const all = names.length, known = names.filter(n => FAN[n]), overseas = known.filter(n => / · /.test(FAN[n][1])).length, avgY = known.length ? (known.reduce((a, n) => a + FAN[n][0], 0) / known.length).toFixed(1) : 0;
-        main.innerHTML = head('粉丝档案', '被 AI 挑出过的粉丝。点一行，看 TA 的历史评论和你回过的话。') + `
+        main.innerHTML = head('粉丝档案', '被 AI 挑出过的粉丝。点一行，看 TA 的历史评论和女演员回过的话。') + `
           <div class="kpis">
             <div class="kpi"><b>${all}</b><span>被挑出过的粉丝</span></div>
             <div class="kpi" style="--kc:var(--accent)"><b>${avgY}</b><span>平均陪伴年数</span></div>
@@ -716,7 +716,7 @@
             const home = kn.filter(r => !/ · /.test(r.from)), away = kn.filter(r => / · /.test(r.from));
             const pts = kn.map(r => ({ x: r.y, y: r.cnt, l: r.n, c: / · /.test(r.from) ? 'var(--info)' : r.star ? 'var(--warn)' : 'var(--accent)' }));
             return `<div class="viz-grid two" style="margin-top:16px">
-              <div class="viz-card"><div class="vh"><b>陪了你几年</b><span>${kn.length} 位 · 平均 ${avgY} 年</span></div>${Viz.cols(yrs, { w: 420, h: 110, labels: yrs.map((_, i) => `${i + 1} 年`), vals: true, every: 3, c: 'var(--accent)', label: '粉丝按陪伴年数' })}<p class="vn">${home.length} 位在国内，${away.length} 位在海外（${[...new Set(away.map(r => r.from.split(' · ')[0]))].join('、')}）。</p></div>
+              <div class="viz-card"><div class="vh"><b>陪了女演员几年</b><span>${kn.length} 位 · 平均 ${avgY} 年</span></div>${Viz.cols(yrs, { w: 420, h: 110, labels: yrs.map((_, i) => `${i + 1} 年`), vals: true, every: 3, c: 'var(--accent)', label: '粉丝按陪伴年数' })}<p class="vn">${home.length} 位在国内，${away.length} 位在海外（${[...new Set(away.map(r => r.from.split(' · ')[0]))].join('、')}）。</p></div>
               <div class="viz-card"><div class="vh"><b>陪得久的，话也多</b><span>横轴年数，纵轴互动次数</span></div>${Viz.scatter(pts, { w: 420, h: 200, xl: '陪伴年数', yl: '互动次数', xmin: 0, xmax: 10.5, xfmt: v => v + ' 年', labelTop: 3, label: '陪伴年数与互动次数' })}<p class="vn">蓝点是海外粉丝，黄点是你星标过的；只标了互动最多的 3 位，其余点上去能看名字。</p></div>
             </div>`;
           })()}
@@ -748,7 +748,7 @@
             <div class="stack">
               <div class="card"><div class="hd"><h3>每天挑几条</h3><b class="accent" id="rp-nv" style="font-size:22px;font-variant-numeric:tabular-nums">${S.n}</b></div>
                 <input type="range" class="range" min="4" max="10" value="${S.n}" id="rp-n" aria-label="每天挑几条">
-                <p class="xs muted" style="margin-top:6px">建议 6 到 8 条：你看完只需要 5 分钟，挑 1 到 2 条回。</p></div>
+                <p class="xs muted" style="margin-top:6px">建议 6 到 8 条：女演员看完只需要 5 分钟，挑 1 到 2 条回。</p></div>
               <div class="card"><div class="hd"><h3>草稿语气</h3></div>
                 <div class="chips" id="rp-tone">${Object.entries(TONES).map(([k, n]) => `<button class="chip ${S.tone === k ? 'on' : ''}" data-v="${k}">${n}</button>`).join('')}</div>
                 <div class="panel" style="margin-top:12px"><div class="xs muted">预览 · 回给 @桐学录「今天是我生日，许愿你能看到这条。」</div><div id="rp-tprev" style="margin-top:6px">${esc(drafts(SPM.s09, S.tone)[0])}</div></div></div>
@@ -760,8 +760,8 @@
           <div class="card" style="margin-top:16px">
             <div class="hd"><h3>边界与声明</h3></div>
             <ul class="small muted" style="margin:0;padding-left:18px;line-height:1.9">
-              <li>AI 只起草，你点头才进待发；不点头，什么都不会发生。</li>
-              <li>产品不替你发任何一条，不模仿你的口吻自动回复，不用你的脸和声音。</li>
+              <li>AI 只起草，女演员点头才进待发；不点头，什么都不会发生。</li>
+              <li>产品不替女演员发任何一条，不模仿女演员的口吻自动回复，不用女演员的脸和声音。</li>
               <li>私信内容只用来挑选，不外传，不做别的用途。</li>
               <li>本页所有评论、粉丝名、点赞数都是演示用假数据，不对应任何真实账号。</li>
             </ul>
@@ -792,7 +792,7 @@
           case 'ok': {
             const text = draftText(p).trim(); if (!text) { toast('草稿是空的，先写一句', 'bad'); return; }
             st.queue.push({ id: 'q' + (st.seq++), cid: p.cid, text, at: hhmm() }); p.st = 'queued'; save(); paintCard(i); paintKpis();
-            toast('放进待发了，你亲自发出后再标记', 'ok'); break;
+            toast('放进待发了，女演员亲自发出后再标记', 'ok'); break;
           }
           case 'unqueue': st.queue = st.queue.filter(q => q.cid !== p.cid); p.st = 'new'; save(); paintCard(i); paintKpis(); toast('撤回了'); break;
           case 'skip': p.st = 'skip'; save(); paintCard(i); paintKpis(); break;
@@ -861,7 +861,7 @@
         const H = hist || HSEED.map(h => ({ fan: h[1], cat: h[2], likes: h[5] }));
         const by = CAT_KEYS.map(k => { const xs = H.filter(h => h.cat === k); return [k, xs.length ? xs.reduce((a, h) => a + h.likes, 0) / xs.length : 0]; }).sort((a, b) => b[1] - a[1]);
         const longest = [...new Set(H.map(h => h.fan))].filter(f => FAN[f]).sort((a, b) => FAN[b][0] - FAN[a][0])[0];
-        const out = [`你亲自回了 ${H.length} 条粉丝评论，每一条都是你点头后自己发出的`];
+        const out = [`女演员亲自回了 ${H.length} 条粉丝评论，每一条都是女演员点头后自己发出的`];
         if (by[0] && by[0][1]) out.push(`粉丝反应最好的是「${CATS[by[0][0]].n}」类回复，平均每条 ${num(Math.round(by[0][1]))} 个赞`);
         if (longest) out.push(`回过的人里，陪伴最久的是 @${longest}，${FAN[longest][0]} 年`);
         return out;
@@ -874,9 +874,9 @@
       };
       if (!st) return {
         viz: weekViz(null),
-        line: `收工前 AI 已挑好 ${n} 条，等你点头`,
-        kpis: [['今天收到', '28,436'], ['AI 挑出', String(n)], ['你已回', '1'], ['待发', '0']],
-        items: [{ tag: '待点头', text: `${n} 条粉丝评论等你看一眼，挑 1 到 2 条回`, href: '#/replies', kind: 'warn' }],
+        line: `收工前 AI 已挑好 ${n} 条，等女演员点头`,
+        kpis: [['今天收到', '28,436'], ['AI 挑出', String(n)], ['女演员已回', '1'], ['待发', '0']],
+        items: [{ tag: '待点头', text: `${n} 条粉丝评论等女演员看一眼，挑 1 到 2 条回`, href: '#/replies', kind: 'warn' }],
         year: year(null),
       };
       const fresh = st.day === today;
@@ -886,15 +886,15 @@
       const queue = (st.queue || []).length;
       const sent = (st.hist || []).filter(h => h.day === today).length;
       const items = [];
-      if (realPending) items.push({ tag: '真评论', text: `贴进来的真评论里挑出 ${realPending} 条，等你点头`, href: '#/replies', kind: 'warn' });
-      if (pending - realPending > 0) items.push({ tag: '待点头', text: `${pending - realPending} 条粉丝评论等你看一眼，挑 1 到 2 条回`, href: '#/replies', kind: 'warn' });
-      if (queue) items.push({ tag: '待发', text: `${queue} 条你点过头的回复还没发出，复制去微博发`, href: '#/replies/queue', kind: '' });
-      if (!items.length) items.push({ tag: '已回', text: `今天回了 ${sent} 条，没有要你做的了`, href: '#/replies/history', kind: 'ok' });
-      const bits = [pending && `${pending} 条等你点头`, queue && `${queue} 条待发`, sent && `${sent} 条已回`].filter(Boolean);
+      if (realPending) items.push({ tag: '真评论', text: `贴进来的真评论里挑出 ${realPending} 条，等女演员点头`, href: '#/replies', kind: 'warn' });
+      if (pending - realPending > 0) items.push({ tag: '待点头', text: `${pending - realPending} 条粉丝评论等女演员看一眼，挑 1 到 2 条回`, href: '#/replies', kind: 'warn' });
+      if (queue) items.push({ tag: '待发', text: `${queue} 条女演员点过头的回复还没发出，复制去微博发`, href: '#/replies/queue', kind: '' });
+      if (!items.length) items.push({ tag: '已回', text: `今天回了 ${sent} 条，没有要女演员做的了`, href: '#/replies/history', kind: 'ok' });
+      const bits = [pending && `${pending} 条等女演员点头`, queue && `${queue} 条待发`, sent && `${sent} 条已回`].filter(Boolean);
       return {
         viz: weekViz(st.hist || []),
         line: bits.length ? bits.join('，') : '今天的都处理完了',
-        kpis: [['今天收到', num(fresh ? st.received : 0)], ['AI 挑出', String(fresh ? picks.length : n)], ['你已回', String(sent)], ['待发', String(queue)]],
+        kpis: [['今天收到', num(fresh ? st.received : 0)], ['AI 挑出', String(fresh ? picks.length : n)], ['女演员已回', String(sent)], ['待发', String(queue)]],
         items: items.slice(0, 5),
         year: year(st.hist || []),
       };

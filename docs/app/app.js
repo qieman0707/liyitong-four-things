@@ -100,10 +100,10 @@ const App = (() => {
       return;
     }
     if (id === 'connect') { document.documentElement.dataset.accent = 'guard'; document.title = '接入 · 这一年四件事'; renderConnect(root); window.scrollTo(0, 0); return; }
-    if (id === 'profile') { document.documentElement.dataset.accent = 'quiz'; document.title = '你的档案 · 这一年四件事'; renderProfile(root); window.scrollTo(0, 0); return; }
+    if (id === 'profile') { document.documentElement.dataset.accent = 'quiz'; document.title = '女演员的档案 · 这一年四件事'; renderProfile(root); window.scrollTo(0, 0); return; }
     if (id === 'today') { document.documentElement.dataset.accent = 'fans'; document.title = '今天 · 这一年四件事'; renderToday(root); window.scrollTo(0, 0); return; }
     if (id === 'cases') { document.documentElement.dataset.accent = 'guard'; document.title = '案例佐证 · 这一年四件事'; renderCases(root, sub); window.scrollTo(0, 0); return; }
-    if (id === 'picks') { document.documentElement.dataset.accent = 'fans'; document.title = '你挑的 · 这一年四件事'; renderPicks(root); window.scrollTo(0, 0); return; }
+    if (id === 'picks') { document.documentElement.dataset.accent = 'fans'; document.title = '女演员挑的 · 这一年四件事'; renderPicks(root); window.scrollTo(0, 0); return; }
     document.documentElement.dataset.accent = 'quiz';
     document.title = '这一年，AI 能接住的四件事';
     renderHome(root);
@@ -116,10 +116,10 @@ const App = (() => {
   const PIC = { radar: 'ill-radar.jpg', replies: 'ill-replies.jpg', quiz: 'ill-quiz.jpg', vibe: 'ill-vibe.jpg' };
   const TALL = { replies: 1, quiz: 1 };
   const NOTES = {
-    radar: [['只记线索，不存素材', '链接、标题、时间和一串哈希。素材本身不下载、不存、不看。'], ['最严重的当天交律师', '按严重程度分三级，最急的 24 小时内打包交律师和取证机构。'], ['你每月只看一页', '平时不用管；月底一页报告，出了大事当天一句话。']],
-    replies: [['AI 只起草', '挑出最该回的几条，起好草稿。发不发、改不改，你说了算。'], ['六类时刻', '生日、考试、生病、多年陪伴、海外粉丝、同人创作。'], ['每天五分钟', '收工后看一眼，点头回一两条，就够了。']],
-    quiz: [['一张想晒的卡', '测完拿到一张结果卡，文字和图形，不用你的照片。'], ['每周换一个', 'AI 出初稿，你点头才发。'], ['不收任何信息', '不登录、不收手机号。']],
-    vibe: [['粉丝说一句话', '想要什么小玩意，一句话就行。'], ['AI 做出来，当场能玩', '倒计时、接龙、打卡、抽签……发回超话大家一起玩。'], ['你每周点名一个', '说一句为什么喜欢，作者会收到。']],
+    radar: [['只记线索，不存素材', '链接、标题、时间和一串哈希。素材本身不下载、不存、不看。'], ['最严重的当天交律师', '按严重程度分三级，最急的 24 小时内打包交律师和取证机构。'], ['女演员每月只看一页', '平时不用管；月底一页报告，出了大事当天一句话。']],
+    replies: [['AI 只起草', '挑出最该回的几条，起好草稿。发不发、改不改，女演员说了算。'], ['六类时刻', '生日、考试、生病、多年陪伴、海外粉丝、同人创作。'], ['每天五分钟', '收工后看一眼，点头回一两条，就够了。']],
+    quiz: [['一张想晒的卡', '测完拿到一张结果卡，文字和图形，不用女演员的照片。'], ['每周换一个', 'AI 出初稿，女演员点头才发。'], ['不收任何信息', '不登录、不收手机号。']],
+    vibe: [['粉丝说一句话', '想要什么小玩意，一句话就行。'], ['AI 做出来，当场能玩', '倒计时、接龙、打卡、抽签……发回超话大家一起玩。'], ['女演员每周点名一个', '说一句为什么喜欢，作者会收到。']],
   };
   function productFrame(p) {
     const notes = NOTES[p.id] || [];
@@ -138,12 +138,12 @@ const App = (() => {
     const P = ORDER.map(id => products[id]).filter(Boolean);
     const dateKey = w => { const m = w.match(/(\d{4})\D+(\d{1,2})(?:\D+(\d{1,2}))?/); return m ? +m[1] * 10000 + +m[2] * 100 + (+m[3] || 0) : 0; };
     const timeline = [...TIMELINE].sort((a, b) => dateKey(a.when) - dateKey(b.when)).map(t => `<article class="story-card">
-        <div class="when">${esc(t.when.replace(/ 年 /g, '.').replace(/ 月 /g, '.').replace(/ 月$/, '').replace(/ 日$/, ''))}<small>${t.to === 'guard' ? '关于你的脸' : '关于粉丝'}</small></div>
+        <div class="when">${esc(t.when.replace(/ 年 /g, '.').replace(/ 月 /g, '.').replace(/ 月$/, '').replace(/ 日$/, ''))}<small>${t.to === 'guard' ? '关于女演员的脸' : '关于粉丝'}</small></div>
         <div><h3>${esc(t.head)}</h3><p class="what">${esc(t.what)}</p>
         <div class="so">所以，${esc(t.so)}</div>
         <div class="src">来源 ${t.src.map(s => `<a href="${s[1]}" target="_blank" rel="noopener">${esc(s[0])}</a>`).join('')}</div></div></article>`).join('');
     /* 前因：先给一根时间线，四件事落在哪个月 */
-    const tlEvents = [...TIMELINE].sort((a, b) => dateKey(a.when) - dateKey(b.when)).map(t => { const m = t.when.match(/(\d{4})\D+(\d{1,2})(?:\D+(\d{1,2}))?/); return { t: new Date(+m[1], +m[2] - 1, +(m[3] || 15)).getTime(), l: t.head, sub: `${m[1]}.${m[2]}${m[3] ? '.' + m[3] : ''} · ${t.to === 'guard' ? '关于你的脸' : '关于粉丝'}`, c: t.to === 'guard' ? 'var(--c-guard)' : 'var(--c-fans)' }; });
+    const tlEvents = [...TIMELINE].sort((a, b) => dateKey(a.when) - dateKey(b.when)).map(t => { const m = t.when.match(/(\d{4})\D+(\d{1,2})(?:\D+(\d{1,2}))?/); return { t: new Date(+m[1], +m[2] - 1, +(m[3] || 15)).getTime(), l: t.head, sub: `${m[1]}.${m[2]}${m[3] ? '.' + m[3] : ''} · ${t.to === 'guard' ? '关于女演员的脸' : '关于粉丝'}`, c: t.to === 'guard' ? 'var(--c-guard)' : 'var(--c-fans)' }; });
     const storyViz = `<div class="f-viz"><div class="vh"><b>这一年发生了什么</b><span>${tlEvents.length} 件事，${tlEvents.filter(e => e.c.includes('guard')).length} 件关于脸，${tlEvents.filter(e => e.c.includes('fans')).length} 件关于粉丝</span></div><div class="viz-scroll">${Viz.timeline(tlEvents, { w: 1000, h: 140, maxL: 22, from: new Date(2025, 8, 1).getTime(), to: new Date(2026, 8, 1).getTime(), label: '这一年四件事的时间线' })}</div></div>`;
     /* 案例：68 条怎么分布 */
     const caseAll = typeof CASES !== 'undefined' ? ORDER.filter(k => products[k]).flatMap(k => (CASES[k] || []).map(c => ({ ...c, p: k }))) : [];
@@ -166,7 +166,7 @@ const App = (() => {
       { l: '评论挑信', days: [1, 1, 1, 1, 1, 1, 1], note: '每天收工后 5 分钟', c: 'var(--c-fans)' },
       { l: '桐铃小测试', days: [0, 0, 0, 2, 0, 0, 0], note: '周四点头，周五 20:00 上线', c: 'var(--c-quiz)' },
       { l: '桐铃 vibecoding', days: [0, 0, 0, 0, 0, 0, 2], note: '周日点名一个', c: 'var(--c-vibe)' },
-    ], { w: 760, lw: 130, nw: 220, label: '一周里哪天要你出手' });
+    ], { w: 760, lw: 130, nw: 220, label: '一周里哪天要女演员出手' });
     const vows = RULES.map(r => `<div class="vow"><div class="mark">不</div><b>${esc(r.head)}</b><p>${esc(r.d)}</p></div>`).join('');
     const features = P.map(p => {
       const plan = PLAN[p.demo] || {};
@@ -175,7 +175,7 @@ const App = (() => {
         <div class="detail">
           <div>
             <div class="pair"><div><b>现在</b>${esc(p.pain)}</div><div><b>有了它</b>${esc(p.ai)}</div></div>
-            <div class="cols" style="margin-top:14px"><div><b>要你做的</b>${esc(plan.she || '')}</div><div><b>AI 做的</b>${esc(plan.ai || '')}</div><div><b>不会做的</b>${esc(plan.not || '')}</div></div>
+            <div class="cols" style="margin-top:14px"><div><b>要女演员做的</b>${esc(plan.she || '')}</div><div><b>AI 做的</b>${esc(plan.ai || '')}</div><div><b>不会做的</b>${esc(plan.not || '')}</div></div>
           </div>
           <div>
             <div class="sub">第一周怎么开始</div>
@@ -195,8 +195,8 @@ const App = (() => {
           <figure class="f-cover"><img src="${ASSETS}ill-cover.jpg" alt="" onerror="this.parentElement.remove()"></figure>
           <div class="f-intro">
             <i class="sq"></i>
-            <p>这一年你的日子，AI 能接住的四件事。</p>
-            <p class="muted">先讲前因：这一年公开报道里发生了什么。再给后果：四个做出来、能直接点、能直接用的东西。一个替你守住脸，三个让粉丝离你更近。</p>
+            <p>这一年女演员的日子，AI 能接住的四件事。</p>
+            <p class="muted">先讲前因：这一年公开报道里发生了什么。再给后果：四个做出来、能直接点、能直接用的东西。一个替女演员守住脸，三个让粉丝离女演员更近。</p>
             <p class="f-links"><a href="#/today">从「今天」开始</a><a href="#story">先看前因</a></p>
           </div>
         </div>
@@ -209,13 +209,13 @@ const App = (() => {
             <div class="cap"><div class="l"><h3>${esc(p.name)}</h3><small>${esc(p.tag)}</small></div><p>${esc(p.short)}</p></div>
             <button class="heart" data-pick="${p.id}" aria-label="想要">♡</button>
           </a>`).join('')}
-          <p class="f-note">不是演示稿。点开是完整的产品：有数据、有按钮，按了有结果，关了再开记录还在。里面的线索、评论、数字都是演示用的假数据。页面里没有你的照片，会出声的只是浏览器自带的朗读。</p>
+          <p class="f-note">不是演示稿。点开是完整的产品：有数据、有按钮，按了有结果，关了再开记录还在。里面的线索、评论、数字都是演示用的假数据。页面里没有女演员的照片，会出声的只是浏览器自带的朗读。</p>
         </div>
       </section>
 
       <section class="f-story" id="story">
         <div class="in">
-          <p class="f-lead">主意不是凭空想的，都来自这一年的公开报道。每条都带出处，细节以你说的为准。</p>
+          <p class="f-lead">主意不是凭空想的，都来自这一年的公开报道。每条都带出处，细节以女演员说的为准。</p>
           ${storyViz}
           <div class="story">${timeline}</div>
         </div>
@@ -240,7 +240,7 @@ const App = (() => {
       <section class="f-plans" id="plans">
         <div class="in">
           <p class="f-lead">谁做什么，第一周怎么开始，边界在哪。每件东西一行，点开看细节。</p>
-          <div class="f-viz"><div class="vh"><b>一周里哪天要你出手</b><span>实心点是要你点头的那天，其余日子 AI 自己转</span></div><div class="viz-scroll">${weekViz}</div></div>
+          <div class="f-viz"><div class="vh"><b>一周里哪天要女演员出手</b><span>实心点是要女演员点头的那天，其余日子 AI 自己转</span></div><div class="viz-scroll">${weekViz}</div></div>
           <div class="plan-list">${features}</div>
         </div>
       </section>
@@ -334,11 +334,11 @@ const App = (() => {
       <div class="card" style="margin-top:14px"><div class="hd"><h3>接入后每件东西多出什么</h3></div>
         <ul class="list">
           <li><span class="avatar" style="--accent:var(--c-guard)">◎</span><div><b>AI 换脸雷达</b><div class="small muted">「真扫一遍」：用搜索找今天含「${esc(p.keywords.split(',')[0])}」+ 换脸 / 神似 的网页标题，AI 分级进线索表。成人站只看标题。</div></div></li>
-          <li><span class="avatar" style="--accent:var(--c-fans)">✉</span><div><b>评论挑信</b><div class="small muted">「贴真评论」：把一条微博下的评论复制进来，AI 按你的语气挑出最该回的几条并起草。</div></div></li>
+          <li><span class="avatar" style="--accent:var(--c-fans)">✉</span><div><b>评论挑信</b><div class="small muted">「贴真评论」：把一条微博下的评论复制进来，AI 按女演员的语气挑出最该回的几条并起草。</div></div></li>
           <li><span class="avatar" style="--accent:var(--c-quiz)">✦</span><div><b>桐铃小测试</b><div class="small muted">「真出一套」：按本周剧情现场出题，结果卡照常能存。</div></div></li>
           <li><span class="avatar" style="--accent:var(--c-vibe)">⌘</span><div><b>桐铃 vibecoding</b><div class="small muted">「真做出来」：随口说一句，AI 现场写出能玩的小玩意，当场跑。</div></div></li>
         </ul></div>
-      <div class="row" style="margin-top:16px"><a class="btn" href="#/profile">你的档案</a><a class="btn btn-ghost" href="#/today">去「今天」</a></div>
+      <div class="row" style="margin-top:16px"><a class="btn" href="#/profile">女演员的档案</a><a class="btn btn-ghost" href="#/today">去「今天」</a></div>
       <p class="fine muted" style="margin-top:16px">要联网。断网时四件东西自动退回演示数据，不会坏。</p>
     </div></section></div>`;
     $('#ai-save', root).onclick = async () => {
@@ -350,11 +350,11 @@ const App = (() => {
   }
   function renderProfile(root) {
     const p = PROFILE.get();
-    const G = [['你是谁', [['name', '名字'], ['fan', '粉丝名'], ['show', '在播的剧'], ['showTime', '更新节奏'], ['works', '作品']]], ['你怎么说话', [['persona', '人设关键词'], ['tone', '回复语气']]], ['红线', [['taboo', '禁区'], ['keywords', '雷达关键词（逗号分开）']]]];
+    const G = [['女演员是谁', [['name', '名字'], ['fan', '粉丝名'], ['show', '在播的剧'], ['showTime', '更新节奏'], ['works', '作品']]], ['女演员怎么说话', [['persona', '人设关键词'], ['tone', '回复语气']]], ['红线', [['taboo', '禁区'], ['keywords', '雷达关键词（逗号分开）']]]];
     const field = (k, l) => `<label class="small muted">${l}</label>${['works', 'persona', 'taboo', 'tone'].includes(k) ? `<textarea class="textarea" data-k="${k}" style="min-height:70px;margin:6px 0 14px">${esc(p[k])}</textarea>` : `<input class="input" data-k="${k}" value="${esc(p[k])}" style="margin:6px 0 14px">`}`;
     const briefShown = () => PROFILE.brief().replace(/页面文字不用第一人称「我」指代当事人。?/, '');
     root.innerHTML = `<div class="landing"><section class="section"><div class="in" style="max-width:720px">
-      <span class="eyebrow">你的档案</span><h2 style="font-size:32px;margin:10px 0 8px">一处填好，四件东西共用。</h2>
+      <span class="eyebrow">女演员的档案</span><h2 style="font-size:32px;margin:10px 0 8px">一处填好，四件东西共用。</h2>
       <p class="muted">挑信按这里的语气起草，小测试按作品出题，vibecoding 按禁区过滤点子，雷达按关键词扫。</p>
       ${G.map(([t, fs]) => `<div class="card" style="margin-top:18px"><div class="hd"><h3>${t}</h3></div>${fs.map(([k, l]) => field(k, l)).join('')}</div>`).join('')}
       <div class="row" style="margin-top:18px"><button class="btn btn-primary" id="pf-save">保存</button><button class="btn btn-ghost" id="pf-reset">恢复默认</button></div>
@@ -374,14 +374,14 @@ const App = (() => {
         <div class="hd"><div class="row"><span class="avatar" style="--accent:var(--c-${p.accent})">${ICON[p.id]}</span><div><b>${esc(p.name)}</b><div class="small muted">${esc(sm && sm.line || p.short)}</div></div></div><a class="btn btn-sm" href="#/${p.id}">打开</a></div>
         ${kpis.length ? `<div class="today-kpis">${kpis.map(k => `<div><b>${esc(k[1])}</b><span>${esc(k[0])}</span></div>`).join('')}</div>` : ''}
         ${sm && sm.viz ? `<div class="today-viz">${sm.vizLabel ? `<div class="lbl">${esc(sm.vizLabel)}</div>` : ''}${sm.viz}</div>` : ''}
-        ${items.length ? `<ul class="list">${items.map(it => `<li><span class="tag ${it.kind || ''}">${esc(it.tag || '待办')}</span><div style="flex:1">${esc(it.text)}</div>${it.href ? `<a class="btn btn-sm btn-ghost" href="${esc(it.href)}">去做</a>` : ''}</li>`).join('')}</ul>` : `<div class="empty" style="min-height:90px"><span class="small">今天没有要你做的</span></div>`}
+        ${items.length ? `<ul class="list">${items.map(it => `<li><span class="tag ${it.kind || ''}">${esc(it.tag || '待办')}</span><div style="flex:1">${esc(it.text)}</div>${it.href ? `<a class="btn btn-sm btn-ghost" href="${esc(it.href)}">去做</a>` : ''}</li>`).join('')}</ul>` : `<div class="empty" style="min-height:90px"><span class="small">今天没有要女演员做的</span></div>`}
       </section>`;
     }).join('');
     const d = new Date(), wk = '日一二三四五六'[d.getDay()];
     root.innerHTML = `<div class="landing"><section class="section today-page"><div class="in" style="max-width:860px">
       <span class="eyebrow">今天 · ${d.getMonth() + 1} 月 ${d.getDate()} 日 周${wk}</span>
-      <h2 style="font-size:34px;margin:10px 0 8px">你每天只看这一页。</h2>
-      <p class="muted">四件东西把今天要你做的事汇到这里：该回谁、有没有新线索、这周点名哪个、测试数据怎么样。每件事一分钟。${AI.ready() ? '' : '<a href="#/connect" style="color:var(--accent);text-decoration:underline">接入 AI</a> 后这里会是真数据。'} <a href="#/profile" style="color:var(--muted);text-decoration:underline">你的档案</a></p>
+      <h2 style="font-size:34px;margin:10px 0 8px">女演员每天只看这一页。</h2>
+      <p class="muted">四件东西把今天要女演员做的事汇到这里：该回谁、有没有新线索、这周点名哪个、测试数据怎么样。每件事一分钟。${AI.ready() ? '' : '<a href="#/connect" style="color:var(--accent);text-decoration:underline">接入 AI</a> 后这里会是真数据。'} <a href="#/profile" style="color:var(--muted);text-decoration:underline">女演员的档案</a></p>
       <div class="today-grid">${blocks}</div>
       <div class="card year-card" style="margin-top:22px"><div class="hd"><h3>这一年的回忆</h3><button class="btn btn-sm" id="yr-make">重新生成</button></div><div id="yr-out" style="margin-top:12px"></div></div>
     </div></section></div>`;
@@ -395,9 +395,9 @@ const App = (() => {
       g.font = '400 30px "PingFang SC",sans-serif'; g.fillStyle = '#6e6a66'; g.fillText(`${d.getFullYear()} 年 · 四件事的记录`, 80, 350);
       let y = 460;
       stats.forEach(s => { g.fillStyle = COL[s.p.accent]; g.fillRect(80, y - 34, 8, 44); g.fillStyle = '#121212'; g.font = '600 38px "Songti SC","STSong",serif'; g.fillText(s.p.name, 110, y); g.font = '400 30px "PingFang SC",sans-serif'; g.fillStyle = '#4a4744'; (s.year.length ? s.year : ['还没开始']).slice(0, 3).forEach(line => { y += 52; g.fillText(line, 110, y); }); y += 90; });
-      g.fillStyle = '#a19c96'; g.font = '400 24px "PingFang SC",sans-serif'; g.fillText(`不碰脸，不碰声音，只做你和${PROFILE.get().fan}之间的事 · 数字为演示`, 80, H - 70);
+      g.fillStyle = '#a19c96'; g.font = '400 24px "PingFang SC",sans-serif'; g.fillText(`不碰脸，不碰声音，只做女演员和${PROFILE.get().fan}之间的事 · 数字为演示`, 80, H - 70);
       const url = c.toDataURL('image/png');
-      $('#yr-out', root).innerHTML = `<img src="${url}" style="width:100%;max-width:420px;border-radius:12px;border:1px solid var(--line)"><div><p class="small muted" style="line-height:1.9">把你亲自回过的、点名过的、守住的攒成一张图。数字会跟着四件东西里的记录走：回过多少条粉丝、点名过几个作品、下架了几条线索。年底这张卡就是这一年的注脚，可以存下来，也可以发给桐铃。</p><div class="row" style="margin-top:14px"><a class="btn btn-sm btn-primary" download="这一年.png" href="${url}">保存图片</a><button class="btn btn-sm btn-ghost" id="yr-re">重新生成</button></div></div>`;
+      $('#yr-out', root).innerHTML = `<img src="${url}" style="width:100%;max-width:420px;border-radius:12px;border:1px solid var(--line)"><div><p class="small muted" style="line-height:1.9">把女演员亲自回过的、点名过的、守住的攒成一张图。数字会跟着四件东西里的记录走：回过多少条粉丝、点名过几个作品、下架了几条线索。年底这张卡就是这一年的注脚，可以存下来，也可以发给桐铃。</p><div class="row" style="margin-top:14px"><a class="btn btn-sm btn-primary" download="这一年.png" href="${url}">保存图片</a><button class="btn btn-sm btn-ghost" id="yr-re">重新生成</button></div></div>`;
       const re = $('#yr-re', root); if (re) re.onclick = () => $('#yr-make', root).click();
     };
     $('#yr-make', root).click();
@@ -406,7 +406,7 @@ const App = (() => {
   function renderPicks(root) {
     const P = picks.map(id => products[id]).filter(Boolean);
     root.innerHTML = `<div class="landing"><section class="picks-page"><div class="in" style="max-width:760px">
-      <span class="eyebrow">最后 · 你挑的</span><h2 style="font-size:32px;margin:10px 0 8px">看中哪几个，就先从哪几个开始。</h2>
+      <span class="eyebrow">最后 · 女演员挑的</span><h2 style="font-size:32px;margin:10px 0 8px">看中哪几个，就先从哪几个开始。</h2>
       <p class="muted">在卡片或产品页点 ♡，这里会列出来。</p>
       <div class="card" style="margin-top:24px">${P.length ? `<ul class="list">${P.map(p => `<li><span class="avatar" style="--accent:var(--c-${p.accent})">${ICON[p.id]}</span><div style="flex:1"><b>${esc(p.name)}</b><div class="small muted">${esc(p.short)}</div></div><a class="btn btn-sm" href="#/${p.id}">打开</a><button class="btn btn-sm btn-ghost" data-un="${p.id}">取消</button></li>`).join('')}</ul>`
         : `<div class="empty" style="text-align:left"><b>还没点心</b><span class="small">看中哪个，在这里直接点 ♡。</span><ul class="list" style="margin-top:14px">${ORDER.map(id => products[id]).filter(Boolean).map(p => `<li><span class="avatar" style="--accent:var(--c-${p.accent})">${ICON[p.id]}</span><div style="flex:1"><b>${esc(p.name)}</b><div class="small muted">${esc(p.short)}</div></div><button class="heart" data-pick="${p.id}" aria-label="想要">♡</button></li>`).join('')}</ul></div>`}</div>
@@ -419,7 +419,7 @@ const App = (() => {
   /* ---------- 启动 ---------- */
   function boot() {
     const links = $('#nav-links');
-    links.innerHTML = `<a href="#/" data-route="home">首页</a><a href="#/today" data-route="today">今天</a>` + ORDER.map(id => products[id]).filter(Boolean).map(p => `<a href="#/${p.id}" data-route="${p.id}">${esc(p.name)}</a>`).join('') + `<a href="#/cases" data-route="cases">案例</a><a href="#/picks" data-route="picks" class="only-m">你挑的</a><a href="#/connect" data-route="connect" class="ai-dot only-m"><span class="dot"></span>接入 AI</a>`;
+    links.innerHTML = `<a href="#/" data-route="home">首页</a><a href="#/today" data-route="today">今天</a>` + ORDER.map(id => products[id]).filter(Boolean).map(p => `<a href="#/${p.id}" data-route="${p.id}">${esc(p.name)}</a>`).join('') + `<a href="#/cases" data-route="cases">案例</a><a href="#/picks" data-route="picks" class="only-m">女演员挑的</a><a href="#/connect" data-route="connect" class="ai-dot only-m"><span class="dot"></span>接入 AI</a>`;
     paintAI();
     $('#burger').onclick = () => $('.nav').classList.toggle('open');
     links.addEventListener('click', () => $('.nav').classList.remove('open'));

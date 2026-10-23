@@ -29,17 +29,17 @@
 
   /* ---------- 过滤规则（脸和声音锁死开着） ---------- */
   const FILTERS = [
-    { k: 'face', name: '涉及你的脸', d: '照片、剧照里的你、换装、头像、形象，一律不做。', lock: true, re: /脸|她的照片|她的剧照|换装|头像|自拍|长相|形象|写真/ },
-    { k: 'voice', name: '涉及你的声音', d: '原声、配音、语音、用你的声音读任何东西，一律不做。', lock: true, re: /声音|语音|配音|原声|她读|读给/ },
-    { k: 'privacy', name: '追行程、打听隐私', d: '你在哪、住哪、航班酒店不做；粉丝自己的手机号、住址也不收。', re: /行程|今天在哪|住址|酒店|航班|手机号|实时位置|身份证/ },
-    { k: 'work', name: '涉及你的工作', d: '工作上的事不碰，只做追剧和好玩的。', re: /片酬|合作方|商务|通告|代言|合同|工作室/ },
+    { k: 'face', name: '涉及女演员的脸', d: '照片、剧照里的女演员、换装、头像、形象，一律不做。', lock: true, re: /脸|她的照片|她的剧照|换装|头像|自拍|长相|形象|写真/ },
+    { k: 'voice', name: '涉及女演员的声音', d: '原声、配音、语音、用女演员的声音读任何东西，一律不做。', lock: true, re: /声音|语音|配音|原声|她读|读给/ },
+    { k: 'privacy', name: '追行程、打听隐私', d: '女演员在哪、住哪、航班酒店不做；粉丝自己的手机号、住址也不收。', re: /行程|今天在哪|住址|酒店|航班|手机号|实时位置|身份证/ },
+    { k: 'work', name: '涉及女演员的工作', d: '工作上的事不碰，只做追剧和好玩的。', re: /片酬|合作方|商务|通告|代言|合同|工作室/ },
     { k: 'rival', name: '拉踩别的艺人', d: '比人气、踩别家的，不做。', re: /比人气|拉踩|吊打|对家|别家/ },
   ];
   const WHY = {
-    face: '要用到你的脸（照片 / 剧照里的你）。规则：涉及你的脸，一律不做。',
-    voice: '要用到你的声音。规则：涉及你的声音，一律不做。',
-    privacy: '在追你的行程。规则：不追行程、不打听隐私。',
-    work: '碰到你的工作。规则：工作上的事不碰。',
+    face: '要用到女演员的脸（照片 / 剧照里的女演员）。规则：涉及女演员的脸，一律不做。',
+    voice: '要用到女演员的声音。规则：涉及女演员的声音，一律不做。',
+    privacy: '在追女演员的行程。规则：不追行程、不打听隐私。',
+    work: '碰到女演员的工作。规则：工作上的事不碰。',
     rival: '在跟别的艺人比。规则：不拉踩。',
   };
 
@@ -1001,7 +1001,7 @@ draw();`,
     });
   }
   const RED = [
-    [/speechSynthesis|SpeechSynthesisUtterance/, '用了浏览器朗读，可能被当成你的声音'],
+    [/speechSynthesis|SpeechSynthesisUtterance/, '用了浏览器朗读，可能被当成女演员的声音'],
     [/getUserMedia|mediaDevices/, '想打开摄像头或麦克风'],
     [/<(audio|video)\b/i, '放了音频或视频'],
     [/\b(src|href)\s*=\s*["']?(https?:)?\/\//i, '引用了外部资源'],
@@ -1115,7 +1115,7 @@ rival：拉踩、和别的艺人比人气
         <nav>${nav.map(n => `<a href="#/vibe${n[0] ? '/' + n[0] : ''}" class="${page === n[0] ? 'on' : ''}" data-nav="${n[0]}"><span>${n[2]}</span>${n[1]}${n[3] !== undefined ? `<em>${n[3]}</em>` : ''}</a>`).join('')}</nav>
         <div class="sec">设置</div>
         <nav><a href="#/vibe/settings" class="${page === 'settings' ? 'on' : ''}" data-nav="settings"><span>⚙</span>征集与规则</a></nav>
-        <div class="vb-fine">所有点子、昵称、人数都是演示用的假数据。小玩意都标明「AI 生成」，不用你的脸和声音。</div>
+        <div class="vb-fine">所有点子、昵称、人数都是演示用的假数据。小玩意都标明「AI 生成」，不用女演员的脸和声音。</div>
       </aside>
       <section class="main">
         <div class="head">${head}</div>
@@ -1139,7 +1139,7 @@ rival：拉踩、和别的艺人比人气
     const passer = Math.round(db.works.reduce((s, w) => s + w.plays * w.passer, 0) / Math.max(1, plays));
     const tw = thisWeek().length, q = queueCount();
     const pw = db.pick && work(db.pick.wid);
-    root.innerHTML = shell('', H(`${C.esc(fanName())} vibecoding`, '粉丝说一句话，AI 做出能直接玩的小玩意，发回超话；你每周点名一个。', `<a class="btn" href="#/vibe/ideas">看点子池</a><a class="btn btn-primary" href="#/vibe/build">让 AI 做一个 →</a>`), `
+    root.innerHTML = shell('', H(`${C.esc(fanName())} vibecoding`, '粉丝说一句话，AI 做出能直接玩的小玩意，发回超话；女演员每周点名一个。', `<a class="btn" href="#/vibe/ideas">看点子池</a><a class="btn btn-primary" href="#/vibe/build">让 AI 做一个 →</a>`), `
       <div class="kpis">
         <div class="kpi"><b data-k="ideas">0</b><span>收到的点子</span><small>排队 ${q}</small></div>
         <div class="kpi" style="--kc:var(--info)"><b data-k="tw">0</b><span>本周做好 / 名额 ${db.settings.perWeek}</span><small>共 ${db.works.length} 个</small></div>
@@ -1152,14 +1152,14 @@ rival：拉踩、和别的艺人比人气
           <div class="row between small muted" style="margin-top:8px"><span>小玩意一发回超话，路人也会点开</span><span class="accent">↗ ${Math.round((db.chart[13] / db.chart[0] - 1) * 100)}%</span></div></div>
       </div>
       <div class="card" style="margin-top:16px"><div class="hd"><h3>一条点子走到哪一步</h3><span class="small muted">累计</span></div>
-        ${Viz.funnel([['收到', db.ideas.length], ['过了规则', db.ideas.filter(i => i.status !== 'rejected').length], ['做出来', db.works.length], ['发回超话', db.works.filter(w => w.posted).length], ['被你点名', db.history.length + (db.pick ? 1 : 0)]].map(f => ({ l: f[0], v: f[1] })), { w: 720, lw: 80, vw: 120, label: '点子走到哪一步' })}
-        <p class="vn small muted" style="margin-top:8px">${db.ideas.filter(i => i.status === 'rejected').length} 条没过规则，都是要用你的脸、声音或行程的；做出来的每一个都发回了超话。</p></div>
+        ${Viz.funnel([['收到', db.ideas.length], ['过了规则', db.ideas.filter(i => i.status !== 'rejected').length], ['做出来', db.works.length], ['发回超话', db.works.filter(w => w.posted).length], ['被女演员点名', db.history.length + (db.pick ? 1 : 0)]].map(f => ({ l: f[0], v: f[1] })), { w: 720, lw: 80, vw: 120, label: '点子走到哪一步' })}
+        <p class="vn small muted" style="margin-top:8px">${db.ideas.filter(i => i.status === 'rejected').length} 条没过规则，都是要用女演员的脸、声音或行程的；做出来的每一个都发回了超话。</p></div>
       <div class="vb-two" style="margin-top:16px">
         <div class="card vb-pin ${pw ? 'glow' : ''}"><div class="hd"><h3>本周点名</h3>${pw ? '<span class="tag accent">置顶中</span>' : '<span class="tag warn">还没点</span>'}</div>
           ${pw ? `<b style="font-size:18px">${C.esc(pw.name)}</b><div class="small muted">@${C.esc(pw.by)} 的点子 · ${C.fmt(pw.plays)} 人玩过</div><div class="vb-note">「${C.esc(db.pick.note)}」</div><div class="row" style="margin-top:12px"><button class="btn btn-sm" data-play="${pw.id}">玩一下</button><a class="btn btn-sm btn-ghost" href="#/vibe/pick">去点名页</a></div>`
-            : `<p class="muted small">本周 ${tw} 个小玩意在榜上，按玩的人数和路人占比排好了，等你挑一个。</p><a class="btn btn-primary btn-sm" href="#/vibe/pick" style="margin-top:12px">去点名 →</a>`}</div>
+            : `<p class="muted small">本周 ${tw} 个小玩意在榜上，按玩的人数和路人占比排好了，等女演员挑一个。</p><a class="btn btn-primary btn-sm" href="#/vibe/pick" style="margin-top:12px">去点名 →</a>`}</div>
         <div class="card"><div class="hd"><h3>谁做什么</h3><span class="small muted">${C.esc(plan.cost || '每周 1 分钟')}</span></div>
-          <ul class="list">${[['你', plan.she], ['AI', plan.ai], ['不做', plan.not]].map(x => `<li><span class="avatar">${x[0][0]}</span><div><b class="small">${x[0]}</b><div class="small muted">${C.esc(String(x[1] || '').replace(/她/g, '你'))}</div></div></li>`).join('')}</ul></div>
+          <ul class="list">${[['女演员', plan.she], ['AI', plan.ai], ['不做', plan.not]].map(x => `<li><span class="avatar">${x[0][0]}</span><div><b class="small">${x[0]}</b><div class="small muted">${C.esc(String(x[1] || '').replace(/她/g, '女演员'))}</div></div></li>`).join('')}</ul></div>
       </div>`);
     const K = { ideas: db.ideas.length, tw, plays, passer };
     C.$$('[data-k]', root).forEach(el => countUp(el, K[el.dataset.k]));
@@ -1209,11 +1209,11 @@ rival：拉踩、和别的艺人比人气
   function pageIdeas() {
     const ui = { f: 'all', sort: 'votes', q: '' };
     let fresh = 0;
-    root.innerHTML = shell('ideas', H('点子池', '粉丝在超话里说的一句话。点 ♡ 投票，票多、路人多的先做；用到你的脸和声音的自动拒绝。'), `
+    root.innerHTML = shell('ideas', H('点子池', '粉丝在超话里说的一句话。点 ♡ 投票，票多、路人多的先做；用到女演员的脸和声音的自动拒绝。'), `
       <div class="card glow">
         <div class="hd"><h3>投一条点子</h3><span class="small muted">说一句话就行，不用会写代码</span></div>
         <div class="vb-submit"><input class="input" data-in maxlength="60" placeholder="比如：想要一个《美人余》追剧倒计时"><input class="input" data-nick maxlength="12" placeholder="昵称（可不填）" value="${C.esc(db.nick)}"><button class="btn btn-primary" data-send>投进点子池</button></div>
-        <div class="xs dim" style="margin-top:8px" data-hint>投进去先过一遍规则：涉及你的脸、声音的，AI 会直接拒绝并写明原因。</div>
+        <div class="xs dim" style="margin-top:8px" data-hint>投进去先过一遍规则：涉及女演员的脸、声音的，AI 会直接拒绝并写明原因。</div>
       </div>
       <div class="card" style="margin-top:16px">
         <div class="vb-tools">
@@ -1363,7 +1363,7 @@ rival：拉踩、和别的艺人比人气
       if (innerWidth < 1100) res.closest('.vb-phone').scrollIntoView({ behavior: 'smooth', block: 'start' });
       C.$('[data-after]', root).innerHTML = `<div class="out"><div class="vb-done"><span class="done-line">✓ 做好了 · ${w.lines} 行 · ${((performance.now() - t0) / 1000).toFixed(1)} 秒</span><span class="tag ok">已进作品墙</span></div>
         <div class="row"><button class="btn btn-primary btn-sm" data-post>发回超话</button><button class="btn btn-sm" data-code>看代码</button><a class="btn btn-sm btn-ghost" href="#/vibe/wall">去作品墙</a><button class="btn btn-sm btn-ghost" data-next>做下一个</button></div>
-        <p class="xs dim" style="margin-top:10px">粉丝的点子、AI 写的代码、做出来的东西，都不碰你的脸和声音。</p></div>`;
+        <p class="xs dim" style="margin-top:10px">粉丝的点子、AI 写的代码、做出来的东西，都不碰女演员的脸和声音。</p></div>`;
       C.$('[data-post]', root).onclick = e => { postWork(w); e.currentTarget.disabled = true; e.currentTarget.textContent = '已发回超话 ✓'; };
       C.$('[data-code]', root).onclick = () => openCode(w);
       C.$('[data-next]', root).onclick = () => { stopW(); C.$('[data-proc]', root).innerHTML = ''; C.$('[data-after]', root).innerHTML = ''; C.$('[data-stage]', root).innerHTML = `<div class="vb-wait"><div><div style="font-size:34px;color:var(--accent)">⌘</div>选下一条点子吧</div></div>`; paintList(); };
@@ -1461,7 +1461,7 @@ rival：拉踩、和别的艺人比人气
         if (innerWidth < 1100) stage.closest('.vb-phone').scrollIntoView({ behavior: 'smooth', block: 'start' });
         after.innerHTML = `<div class="out"><div class="vb-done"><span class="done-line">✓ 真做好了 · ${w.lines} 行 · ${((performance.now() - t0) / 1000).toFixed(1)} 秒</span><span class="tag info">真做</span><span class="tag ok">已进作品墙</span></div>
           <div class="row"><button class="btn btn-primary btn-sm" data-post>发回超话</button><button class="btn btn-sm" data-code>看代码</button><a class="btn btn-sm btn-ghost" href="#/vibe/wall">去作品墙</a></div>
-          <p class="xs dim" style="margin-top:10px">这是 AI 现写的真代码，跑在断网的沙盒里；不碰你的脸和声音，不收任何个人信息。</p></div>`;
+          <p class="xs dim" style="margin-top:10px">这是 AI 现写的真代码，跑在断网的沙盒里；不碰女演员的脸和声音，不收任何个人信息。</p></div>`;
         C.$('[data-post]', after).onclick = e => { postWork(w); e.currentTarget.disabled = true; e.currentTarget.textContent = '已发回超话 ✓'; };
         C.$('[data-code]', after).onclick = () => openCode(w);
         C.toast(`「${w.name}」真做好了，已放进作品墙`, 'ok');
@@ -1527,7 +1527,7 @@ rival：拉踩、和别的艺人比人气
       const L = thisWeek().filter(w => !pickedIds.has(w.id)).sort((a, b) => heat(b) - heat(a));
       const maxH = Math.max(1, ...L.map(heat));
       const pw = db.pick && work(db.pick.wid);
-      root.innerHTML = shell('pick', H(`本周点名 · 第 ${cw} 周`, '本周做出来的小玩意，按玩的人数和路人占比排好了。你点一个，置顶一周，再写一句话给作者。'), `
+      root.innerHTML = shell('pick', H(`本周点名 · 第 ${cw} 周`, '本周做出来的小玩意，按玩的人数和路人占比排好了。女演员点一个，置顶一周，再写一句话给作者。'), `
         ${pw ? `<div class="card glow vb-pin" style="margin-bottom:16px"><div class="hd"><h3>★ 本周点名 · 置顶到 ${md(db.pick.t + 7 * DAY)}</h3><span class="tag accent">已置顶</span></div>
           <div class="row between"><div style="min-width:0"><b style="font-size:20px">${C.esc(pw.name)}</b><div class="small muted">@${C.esc(pw.by)}「${C.esc(pw.idea)}」 · <span data-plays="${pw.id}">${C.fmt(pw.plays)}</span> 人玩过 · 路人 ${pw.passer}%</div></div>
           <div class="row"><button class="btn btn-sm" data-play="${pw.id}">玩一下</button><button class="btn btn-sm btn-ghost" data-undo>撤回点名</button></div></div>
@@ -1561,7 +1561,7 @@ rival：拉踩、和别的艺人比人气
       <textarea class="textarea" data-note maxlength="40" style="margin-top:6px;min-height:80px" placeholder="说一句为什么喜欢"></textarea>
       <div class="row between xs dim" style="margin:4px 0 10px"><span>不超过 40 个字</span><span data-len>0 / 40</span></div>
       <div class="chips">${NOTE_HINTS.map(h => `<button class="chip" data-h="${C.esc(h)}">${C.esc(h)}</button>`).join('')}</div>
-      <p class="xs dim" style="margin-top:12px">点名只能你本人点，AI 不替你点。置顶一周，下周一自动进往周记录。</p>`,
+      <p class="xs dim" style="margin-top:12px">点名只能女演员本人点，AI 不替女演员点。置顶一周，下周一自动进往周记录。</p>`,
     { title: '点名这个小玩意', foot: `<button class="btn btn-sm btn-ghost" data-cancel>再想想</button><button class="btn btn-sm btn-primary" data-ok>确认点名</button>` });
     d.classList.add('vb-dlg');
     const ta = C.$('[data-note]', d), len = () => { C.$('[data-len]', d).textContent = `${ta.value.length} / 40`; };
@@ -1592,7 +1592,7 @@ rival：拉踩、和别的艺人比人气
         <div class="stack">
           <div class="card"><div class="hd"><h3>每周做几个</h3><span class="small muted">本周已做 ${thisWeek().length} 个</span></div>
             <div class="chips" data-per>${[3, 5, 8, 10, 12].map(n => `<button class="chip ${S.perWeek === n ? 'on' : ''}" data-v="${n}">${n} 个</button>`).join('')}</div>
-            <p class="xs dim" style="margin-top:8px">做够了，「做出来」的按钮会停住，等下周。少而精，你点名才看得过来。</p></div>
+            <p class="xs dim" style="margin-top:8px">做够了，「做出来」的按钮会停住，等下周。少而精，女演员点名才看得过来。</p></div>
           <div class="card"><div class="hd"><h3>所有小玩意标明「AI 生成」</h3><button class="switch on" disabled aria-label="固定开"></button></div>
             <p class="small muted">固定开，关不掉。每个小玩意顶部和代码开头都写着「AI 生成 · 桐铃 vibecoding」。</p></div>
         </div>
@@ -1605,7 +1605,7 @@ rival：拉踩、和别的艺人比人气
         <ul class="list">${rej.map(i => `<li><span class="avatar" style="--accent:var(--bad);--accent-soft:var(--bad-soft);--accent-line:var(--bad)">✕</span><div style="flex:1;min-width:0"><div class="small">「${C.esc(i.text)}」 <span class="xs dim">@${C.esc(i.by)} · ${ago(i.t)}</span></div><div class="small" style="color:var(--bad);margin-top:2px">原因：${C.esc(i.reason)}</div></div></li>`).join('')}</ul>
       </div>
       <div class="vb-two" style="margin-top:16px">
-        <div class="card"><div class="hd"><h3>假数据声明</h3></div><p class="small muted">这里的点子、昵称、票数、玩的人数、城市分布、往周点名，全部是演示用的假数据，不代表任何真实粉丝或真实数据。小玩意不使用你的照片、脸和声音；「每天 20:00 更新」是演示设定。</p></div>
+        <div class="card"><div class="hd"><h3>假数据声明</h3></div><p class="small muted">这里的点子、昵称、票数、玩的人数、城市分布、往周点名，全部是演示用的假数据，不代表任何真实粉丝或真实数据。小玩意不使用女演员的照片、脸和声音；「每天 20:00 更新」是演示设定。</p></div>
         <div class="card"><div class="hd"><h3>重置演示数据</h3></div><p class="small muted">清掉投过的点子、做出来的小玩意、点名、打卡和投票记录，回到第一次打开的样子。</p><button class="btn btn-danger btn-sm" data-reset style="margin-top:12px">重置演示数据</button></div>
       </div>`);
     const prev = () => { C.$('[data-prev]', root).innerHTML = `<div class="who"><span class="avatar">${C.esc(fanName().slice(-1))}</span><b>${C.esc(fanName())} vibecoding</b><span class="dim">· 超话 · 刚刚</span></div>${C.esc(C.$('[data-call]', root).value)}`; };
@@ -1647,10 +1647,10 @@ rival：拉踩、和别的艺人比人气
     if (rr.length) items.push({ tag: '已拦下', text: `这周 ${rr.length} 条涉及脸、声音或行程的点子被自动拒绝`, href: '#/vibe/settings', kind: 'ok' });
     return {
       viz: typeof Viz !== 'undefined' && d.chart ? `<div class="row" style="gap:14px;flex-wrap:nowrap">${Viz.spark(d.chart, { w: 200, h: 44, c: 'var(--c-vibe)', zero: true, label: '近 14 天玩的人次' })}<span class="small muted">近 14 天每天玩的人次，${d.chart[0] ? `比两周前多 ${Math.round((d.chart[13] / d.chart[0] - 1) * 100)}%` : ''}</span></div>` : '',
-      line: pick ? `本周已点名「${pick.name}」，排队 ${queue.length} 条点子` : `本周 ${rank.length} 个小玩意等你点名，排队 ${queue.length} 条点子`,
+      line: pick ? `本周已点名「${pick.name}」，排队 ${queue.length} 条点子` : `本周 ${rank.length} 个小玩意等女演员点名，排队 ${queue.length} 条点子`,
       kpis: [['排队点子', String(queue.length)], ['本周做好', String(wk.length)], ['玩过人次', fmt(plays)], real ? ['AI 真做', String(real)] : ['路人占比', passer + '%']],
       items: items.slice(0, 5),
-      year: [`${p.fan || '粉丝'}投来 ${d.ideas.length} 个点子，做出 ${d.works.length} 个小玩意，被玩了 ${fmt(plays)} 次`, `你点名了 ${d.history.length + (d.pick ? 1 : 0)} 个粉丝的作品，路人占 ${passer}%`, `${rej.length} 条想用你的脸或声音的点子，一条都没做`],
+      year: [`${p.fan || '粉丝'}投来 ${d.ideas.length} 个点子，做出 ${d.works.length} 个小玩意，被玩了 ${fmt(plays)} 次`, `女演员点名了 ${d.history.length + (d.pick ? 1 : 0)} 个粉丝的作品，路人占 ${passer}%`, `${rej.length} 条想用女演员的脸或声音的点子，一条都没做`],
     };
   }
 
@@ -1661,11 +1661,11 @@ rival：拉踩、和别的艺人比人气
     demo: 11,
     name: '桐铃 vibecoding',
     tag: '粉丝',
-    short: '粉丝说一句话，AI 做出能直接玩的小玩意；你每周点名一个。',
+    short: '粉丝说一句话，AI 做出能直接玩的小玩意；女演员每周点名一个。',
     meta: '点子池 · 7 种小玩意 · 每周点名',
     blurb: '粉丝说一句想要什么，AI 当场做成能玩的小页面。',
-    pain: '粉丝想为你做点什么，只会做图、剪混剪；AI 做东西已经不用会编程，可没人带着玩，做出来的也只在超话里转。',
-    ai: '一句话点子进池子，用到你的脸和声音的自动拒绝；AI 读懂、写代码、自己先玩一遍，做好就能玩；你每周花 1 分钟点名一个，置顶一周，顺手破圈。',
+    pain: '粉丝想为女演员做点什么，只会做图、剪混剪；AI 做东西已经不用会编程，可没人带着玩，做出来的也只在超话里转。',
+    ai: '一句话点子进池子，用到女演员的脸和声音的自动拒绝；AI 读懂、写代码、自己先玩一遍，做好就能玩；女演员每周花 1 分钟点名一个，置顶一周，顺手破圈。',
 
     summary,
 

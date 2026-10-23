@@ -153,10 +153,10 @@
   /* ---------- 线索标题模板（全部虚构） ---------- */
   const TPL = {
     '3P0': [
-      ['标题含「李一桐」的成人 AI 短剧条目', '搜索摘要自述为成人 AI 短剧，标题直接用你的名字。', '李一桐'],
-      ['「一桐 换脸」成人站合集条目', '摘要写着「AI 换脸」「合集」，拿你的名字做标签。', '李一桐 换脸'],
-      ['标题挂本名「李雪」的成人站短剧', '标题用你的本名引流，摘要描述成人内容。', '李雪'],
-      ['「黄蓉同款脸」成人 AI 短剧条目', '用你演过的角色名做标题，摘要自述成人 AI 短剧。', '黄蓉 换脸'],
+      ['标题含「李一桐」的成人 AI 短剧条目', '搜索摘要自述为成人 AI 短剧，标题直接用女演员的名字。', '李一桐'],
+      ['「一桐 换脸」成人站合集条目', '摘要写着「AI 换脸」「合集」，拿女演员的名字做标签。', '李一桐 换脸'],
+      ['标题挂本名「李雪」的成人站短剧', '标题用女演员的本名引流，摘要描述成人内容。', '李雪'],
+      ['「黄蓉同款脸」成人 AI 短剧条目', '用女演员演过的角色名做标题，摘要自述成人 AI 短剧。', '黄蓉 换脸'],
     ],
     '1P0': [
       ['换脸造谣图：配文编造私生活传闻', '配图疑似 AI 合成，配文造黄谣，转发还在涨。', '李一桐 换脸'],
@@ -167,24 +167,24 @@
       ['「李一桐 主演」付费 AI 短剧（共 {n} 集）', '剧集简介写「李一桐主演」，画面疑似 AI 换脸，按集收费：冒充本人参演并牟利。', '李一桐 AI'],
     ],
     '0P1': [
-      ['古装 AI 短剧，女主疑似套用黄蓉同款脸', '封面和你演黄蓉时的造型高度相似，疑似 AI 合成。', '黄蓉 换脸'],
-      ['标题借「李一桐同款」的都市短剧 第 {n} 集', '剧名和简介写「李一桐同款」，演员表里没有你。', '李一桐 同款脸'],
-      ['「AI 换脸版」《美人余》片段剪辑', '标题直接标注 AI 换脸版，拿你的名字当标签。', '美人余 换脸'],
+      ['古装 AI 短剧，女主疑似套用黄蓉同款脸', '封面和女演员演黄蓉时的造型高度相似，疑似 AI 合成。', '黄蓉 换脸'],
+      ['标题借「李一桐同款」的都市短剧 第 {n} 集', '剧名和简介写「李一桐同款」，演员表里没有女演员。', '李一桐 同款脸'],
+      ['「AI 换脸版」《美人余》片段剪辑', '标题直接标注 AI 换脸版，拿女演员的名字当标签。', '美人余 换脸'],
     ],
     '1P1': [
       ['「神似李一桐」AI 短剧切片 第 {n} 集', '标题用「神似李一桐」引流，切片出自疑似 AI 换脸短剧。', '神似李一桐'],
       ['《云秀行》同款脸 AI 换脸混剪', '把剧中镜头换成另一张脸再配原名，疑似 AI 换脸。', '云秀行 换脸'],
-      ['用你的剧照做演示的 AI 换脸教程', '教程拿你的公开剧照做换脸演示，并配名字标签。', '李一桐 换脸'],
-      ['「一桐脸」AI 合成短视频合集', '多条短视频疑似 AI 合成同一张脸，标题挂你的名字。', '李一桐 同款脸'],
+      ['用女演员的剧照做演示的 AI 换脸教程', '教程拿女演员的公开剧照做换脸演示，并配名字标签。', '李一桐 换脸'],
+      ['「一桐脸」AI 合成短视频合集', '多条短视频疑似 AI 合成同一张脸，标题挂女演员的名字。', '李一桐 同款脸'],
     ],
     '2P1': [
       ['「一桐同款脸」甜宠短剧 第 {n} 集', 'App 内剧名带「一桐同款脸」，封面疑似 AI 合成。', '李一桐 同款脸'],
-      ['简介写「李一桐 AI 版」的网剧', '简介借你的名字宣传「AI 版」，没有任何授权说明。', '李一桐 AI'],
+      ['简介写「李一桐 AI 版」的网剧', '简介借女演员的名字宣传「AI 版」，没有任何授权说明。', '李一桐 AI'],
     ],
     '0P2': [['宣传语写「一桐同款甜妹」的短剧', '宣传语借名营销，画面没有发现换脸痕迹。', '一桐']],
     '1P2': [
       ['「神似一桐」穿搭博主标题党', '标题用「神似一桐」引流，内容是普通穿搭，没有换脸。', '神似李一桐'],
-      ['「李一桐同款脸」AI 写真引流帖', 'AI 写真标题借你的名字，引流到付费修图。', '李一桐 同款脸'],
+      ['「李一桐同款脸」AI 写真引流帖', 'AI 写真标题借女演员的名字，引流到付费修图。', '李一桐 同款脸'],
       ['「撞脸李一桐」路人合集', '标题党合集，没有发现换脸痕迹。', '李一桐'],
     ],
     '2P2': [['剧名蹭「一桐」的甜宠短剧', '剧名借名营销，画面没有发现换脸痕迹。', '一桐']],
@@ -291,11 +291,11 @@
 
   App.register({
     id: 'radar', accent: 'guard', demo: 12, name: 'AI 换脸雷达', tag: '守护',
-    short: '谁在盗用你的脸，先发现、再取证、再下架。',
+    short: '谁在盗用女演员的脸，先发现、再取证、再下架。',
     meta: '每天扫 · 只记元数据 · P0 24 小时交律师',
-    blurb: '替你盯着谁在用你的脸，处理交给工作室和律师，你只看结果。',
-    pain: '你公开说过没签任何 AI 授权，可换脸短剧、造谣图、「神似」切片还是会冒出来。现在靠粉丝举报和人工搜，发现得晚，证据不好固定，投诉完有没有真下架也没人盯。',
-    ai: '每条线索从发现到结案都在一张表里：几点发现、哪一级、走到哪一步、还剩几小时。P0 当天交律师，投诉后 7 天进复查，再上传自动升级。你每月只看一页报告。',
+    blurb: '替女演员盯着谁在用女演员的脸，处理交给工作室和律师，女演员只看结果。',
+    pain: '女演员公开说过没签任何 AI 授权，可换脸短剧、造谣图、「神似」切片还是会冒出来。现在靠粉丝举报和人工搜，发现得晚，证据不好固定，投诉完有没有真下架也没人盯。',
+    ai: '每条线索从发现到结案都在一张表里：几点发现、哪一级、走到哪一步、还剩几小时。P0 当天交律师，投诉后 7 天进复查，再上传自动升级。女演员每月只看一页报告。',
 
     /* 「今天」页：只读 store，不碰 DOM */
     summary(ctx) {
@@ -384,11 +384,11 @@
       root.innerHTML = `${CSS}
       <div class="app rd">
         <aside class="side">
-          <div class="brand"><i>◎</i><div><b>AI 换脸雷达</b><small>你的维权看板</small></div></div>
+          <div class="brand"><i>◎</i><div><b>AI 换脸雷达</b><small>女演员的维权看板</small></div></div>
           <nav id="rd-nav"></nav>
           <div class="sec">设置</div>
           <nav><a href="#/radar/settings" data-p="settings">关键词与平台</a></nav>
-          <p class="fine">处理交给工作室和律师，你只看结果。线索、数字全是演示用的假数据，标题为虚构；公开案例是真实报道。雷达只记链接、标题、时间和截图哈希，不下载、不存、不看素材。</p>
+          <p class="fine">处理交给工作室和律师，女演员只看结果。线索、数字全是演示用的假数据，标题为虚构；公开案例是真实报道。雷达只记链接、标题、时间和截图哈希，不下载、不存、不看素材。</p>
         </aside>
         <section class="main" id="rd-main"></section>
       </div>`;
@@ -571,7 +571,7 @@ ${list.slice(from, from + CH).map((x, j) => `[${from + j}] ${String(x.title).rep
           const pi = platIndex(h.platform, x.site, lv); if (PLATS[pi].g === 3) lv = 'C';
           const isC = lv === 'C';
           const c = { id: `R-${S.seq++}`, p: pi, lv, pr: h.pr, pr0: h.pr, tt: String(x.title).slice(0, 90), real: 1,
-            why: `AI 判定（只看标题和摘要）：${String(h.why || '标题借用了你的名字').replace(/[。.\s]+$/, '')}。命中 ${h.pr}：${RULE[h.pr]}。${isC ? 'C 级站只看了搜索标题，没有打开链接，也不记录地址。' : ''}`,
+            why: `AI 判定（只看标题和摘要）：${String(h.why || '标题借用了女演员的名字').replace(/[。.\s]+$/, '')}。命中 ${h.pr}：${RULE[h.pr]}。${isC ? 'C 级站只看了搜索标题，没有打开链接，也不记录地址。' : ''}`,
             kw: x.q, src: '真扫 · Google 搜索标题摘要', url: isC ? C_URL : `${x.site || '搜索结果'} · 原链接`, link: isC ? null : x.url, snip: isC ? '' : String(x.snippet || '').slice(0, 160), date: isC ? '' : (x.date || ''),
             at: now, due: now + LIMIT[h.pr], st: 'new', fl: {}, esc: 0, log: [] };
           firstLog(c); made.push(c);
@@ -665,7 +665,7 @@ ${list.slice(from, from + CH).map((x, j) => `[${from + j}] ${String(x.title).rep
         const stc30 = ST_KEYS.map(k => [k, recent30.filter(c => c.st === k).length]);
         const f30 = recent30.filter(c => c.filedAt).length, rate30 = f30 ? Math.round(recent30.filter(c => c.downAt).length / f30 * 100) : 0;
         return `
-        <div class="head"><div><h2>总览</h2><p>替你盯着谁在用你的脸：这周扫到什么、处理到哪一步。上次扫描：${last ? ago(last.t) : '还没扫过'} · 关键词 ${S.kw.length} 个 · 平台 ${enabledPlats().length} 个</p></div>
+        <div class="head"><div><h2>总览</h2><p>替女演员盯着谁在用女演员的脸：这周扫到什么、处理到哪一步。上次扫描：${last ? ago(last.t) : '还没扫过'} · 关键词 ${S.kw.length} 个 · 平台 ${enabledPlats().length} 个</p></div>
           <div class="row">${headBtns()}</div></div>
         <div id="rd-out" class="out"></div>
         <div class="kpis k5">${kpis().map(k => `<div class="kpi" style="${k[4] ? '--kc:' + k[4] : ''}"><small>${k[3]}</small><b data-roll="${k[0]}" data-to="${k[1]}">${fmt(prevK[k[0]] ?? 0)}</b><span>${k[2]}</span></div>`).join('')}</div>
@@ -825,7 +825,7 @@ ${list.slice(from, from + CH).map((x, j) => `[${from + j}] ${String(x.title).rep
         const stc = STC;
         const pmax = Math.max(1, ...R.plat.map(p => p[1]));
         return `
-        <div class="head"><div><h2>月报</h2><p>你每月只看这一页，处理细节在线索表里。</p></div>
+        <div class="head"><div><h2>月报</h2><p>女演员每月只看这一页，处理细节在线索表里。</p></div>
           <div class="row"><div class="chips" id="rd-month"><button class="chip ${month === 0 ? 'on' : ''}" data-v="0">本月</button><button class="chip ${month === 1 ? 'on' : ''}" data-v="1">上月</button></div><button class="btn btn-primary" data-copy-report>复制成文字</button></div></div>
         <article class="paper">
           <div class="row between"><span class="eyebrow">AI 换脸雷达 · ${esc(prof().name)} · 月报</span><span class="xs dim tn">${fd(R.s)} — ${fd(R.e)}</span></div>
@@ -871,13 +871,13 @@ ${list.slice(from, from + CH).map((x, j) => `[${from + j}] ${String(x.title).rep
             <ol class="list">${RADAR.steps.map((s, i) => `<li><span class="avatar">${i + 1}</span><div><b class="small">${esc(s[0])}</b><p class="small muted">${esc(s[1])}</p></div></li>`).join('')}</ol></div>
           <div class="card"><div class="hd"><h3>跟进闭环</h3></div>
             <div class="steps">${RADAR.loop.map((s, i) => `<span><i>${i + 1}</i>${esc(s)}</span>`).join('')}</div>
-            <p class="small muted" style="margin-top:12px">投诉后 7 天内复查是否真下架；同一内容再次上传的，升一级处理。每月给你一份报告。</p>
+            <p class="small muted" style="margin-top:12px">投诉后 7 天内复查是否真下架；同一内容再次上传的，升一级处理。每月给女演员一份报告。</p>
             <div class="divider"></div>
             <b class="small">只碰元数据</b><p class="small muted">${esc(PLAN[12].not)}</p></div>
         </div>
         <div class="card" style="margin-top:14px"><div class="hd"><h3>公开案例时间线</h3><span class="xs muted">只写已证实的内容</span></div>
           <ul class="tl">${RADAR.cases.map(c => `<li><span class="d">${esc(c[0])}</span><p>${esc(c[1])}</p><a href="${c[3]}" target="_blank" rel="noopener">${esc(c[2])}</a></li>`).join('')}</ul>
-          <p class="xs dim">目前没有公开报道点名任何平台上有你的换脸短剧，雷达是监测框架。</p></div>
+          <p class="xs dim">目前没有公开报道点名任何平台上有女演员的换脸短剧，雷达是监测框架。</p></div>
         <div class="card" style="margin-top:14px"><div class="hd"><h3>真扫</h3><span class="tag ${aiOn() ? 'ok' : ''}">${aiOn() ? 'AI 已接入' : '未接入，只能演示扫'}</span></div>
           <p class="small muted">真扫用「档案」页里的前 3 个关键词，各配「换脸 / AI 短剧 / 神似 / 同款脸」搜一次 Google，共 ${realQueries().length} 次；只看搜索结果的标题和摘要，再交 AI 按上面的分级规则判定。C 级成人站只在标题里出现：不打开、不记地址、不存摘要。</p>
           <div class="kws">${realQueries().map(q => `<span class="kw" style="padding-right:12px">${esc(q)}</span>`).join('')}</div>
