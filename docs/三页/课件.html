@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>课件 · 两件给桐铃玩的东西</title>
+<style>
+  :root { --paper:#f7f2e8; --ink:#2a2622; --mute:#7a7169; --dim:#a39a8f; --line:#d9d0c1; --mark:#b5542a; --soft:#efe7d8; --ok:#2f6b45; }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; background:var(--paper); color:var(--ink); font:18px/1.7 -apple-system,"PingFang SC","Hiragino Sans GB","Noto Sans CJK SC",sans-serif; }
+  a { color:inherit; }
+  .nav { position:sticky; top:0; z-index:5; display:flex; justify-content:space-between; align-items:center; padding:12px 40px; font-size:14px; color:var(--mute); background:rgba(247,242,232,.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
+  .nav b { color:var(--ink); font-weight:600; }
+  .nav a { text-decoration:none; margin-left:20px; }
+  .p { display:flex; flex-direction:column; align-items:center; text-align:center; padding:56px 80px; max-width:1480px; margin:0 auto; }
+  .p.sec { padding:140px 80px 48px; border-top:1px solid var(--line); margin-top:56px; }
+  .p.cover { padding:160px 80px 120px; }
+  .k { font-size:14px; color:var(--mark); letter-spacing:.14em; margin-bottom:18px; }
+  h1 { font-size:54px; font-weight:700; margin:0 0 16px; letter-spacing:.01em; line-height:1.25; }
+  h2 { font-size:36px; font-weight:700; margin:0 0 14px; line-height:1.3; max-width:22em; }
+  .sub { font-size:21px; color:var(--mute); margin:0; max-width:30em; }
+  .big { font-size:32px; font-weight:600; line-height:1.45; max-width:22em; margin:0; }
+  .num { font-size:64px; font-weight:700; line-height:1.1; margin:0 0 10px; letter-spacing:.01em; }
+  .src { font-size:14px; color:var(--dim); margin-top:16px; }
+  .src a { color:var(--dim); }
+  .tag { display:inline-block; font-size:13px; line-height:1.6; padding:0 9px; border-radius:999px; background:var(--soft); color:var(--mute); vertical-align:2px; margin-left:6px; }
+  .tag.hi { background:#e3eee6; color:var(--ok); } .tag.mid { background:#f3e8d4; color:#8a6420; }
+  .shot { max-width:100%; max-height:70vh; border:1px solid var(--line); border-radius:10px; background:#fff; display:block; box-shadow:0 10px 40px rgba(42,38,34,.08); }
+  .cap { font-size:17px; color:var(--mute); margin:18px 0 0; max-width:36em; }
+  .cap b { color:var(--ink); }
+  .split { display:grid; grid-template-columns:1.25fr 1fr; gap:56px; align-items:center; text-align:left; width:100%; max-width:1320px; }
+  .split h2 { font-size:30px; }
+  .split p { font-size:18px; margin:0 0 10px; }
+  .split .num { font-size:50px; }
+  .two { display:grid; grid-template-columns:1fr 1fr; gap:48px; width:100%; max-width:1200px; text-align:left; }
+  .two > div { border-top:2px solid var(--ink); padding-top:14px; }
+  .two b { display:block; font-size:26px; margin-bottom:6px; }
+  .two img { width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:8px; margin-bottom:14px; }
+  .two p { margin:0; color:var(--mute); }
+  table { border-collapse:collapse; width:100%; max-width:1200px; text-align:left; font-size:18px; }
+  th, td { padding:12px 16px 12px 0; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { color:var(--mute); font-weight:500; font-size:14px; }
+  td:first-child { font-weight:600; white-space:nowrap; }
+  ul { text-align:left; max-width:32em; margin:0; padding-left:1.2em; font-size:21px; line-height:1.8; }
+  ul.s { font-size:18px; }
+  .do { font-size:18px; color:var(--mute); margin:16px 0 0; max-width:36em; }
+  .do b { color:var(--ink); }
+  .vows { display:grid; grid-template-columns:repeat(3,1fr); gap:40px; max-width:1100px; text-align:left; }
+  .vows b { display:block; font-size:24px; margin-bottom:4px; }
+  .vows span { color:var(--mute); }
+  .unit { display:grid; grid-template-columns:1fr 1fr; gap:48px; width:100%; max-width:1320px; text-align:left; align-items:center; }
+  .unit dl { display:grid; grid-template-columns:70px 1fr; gap:8px 14px; margin:0; font-size:17px; }
+  .unit dt { color:var(--mute); font-size:14px; padding-top:3px; } .unit dd { margin:0; }
+  .live { max-width:1480px; }
+  .live iframe { width:100%; height:80vh; min-height:560px; border:1px solid var(--line); border-radius:12px; background:#fff; box-shadow:0 10px 40px rgba(42,38,34,.08); }
+  .tabs { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin:0 0 14px; }
+  .tabs button { font:inherit; font-size:15px; padding:6px 14px; border-radius:999px; border:1px solid var(--line); background:transparent; color:var(--ink); cursor:pointer; }
+  .tabs button.on { background:var(--ink); color:var(--paper); border-color:var(--ink); }
+  .tabs a { font-size:15px; padding:6px 10px; color:var(--mute); text-decoration:none; }
+  .two .go { font-size:14px; color:var(--mark); font-weight:400; margin-left:8px; }
+  .prompt { text-align:left; font:15px/1.6 ui-monospace,Menlo,monospace; background:#fff; border:1px solid var(--line); border-radius:10px; padding:20px 24px; max-width:860px; white-space:pre-wrap; margin:0; }
+  .phones { display:grid; grid-template-columns:repeat(3,1fr); gap:32px; width:100%; max-width:1200px; align-items:start; }
+  .phones .shot { max-height:72vh; margin:0 auto; }
+  .phones .cap { font-size:15px; margin-top:12px; }
+  @media (max-width:900px) { .phones { grid-template-columns:1fr; } }
+  .foot { padding:60px 40px 80px; text-align:center; font-size:13px; color:var(--dim); }
+  @media (max-width:900px) { .p, .p.sec, .p.cover { padding:40px 20px; } .nav { padding:10px 16px; } .nav a { margin-left:12px; } h1 { font-size:34px; } h2, .split h2 { font-size:24px; } .big { font-size:22px; } .num, .split .num { font-size:40px; } .split, .two, .unit, .vows { grid-template-columns:1fr; gap:20px; } .shot { max-height:none; } body { font-size:16px; } }
+</style>
+</head>
+<body>
+<div class="nav"><b>两件给桐铃玩的东西</b><span><a href="#why">一 为什么做</a><a href="#what">二 做什么</a><a href="#design">三 为什么这么做</a><a href="#teach">四 怎么去教</a><a href="#qa">附</a></span></div>
+<div id="deck">
+
+<!-- 封面 -->
+<section class="p cover"><div class="k">讲课课件 · 二〇二六年十月</div><h1>两件给桐铃玩的东西</h1><p class="sub">为什么做 · 做什么 · 为什么这么做 · 怎么去教</p><p class="src">往下滑 · 指代她一律写「女演员」· 数字按原文 · 页面里的人数是演示假数据</p></section>
+
+<section class="p"><div class="k">目录</div><table style="max-width:720px"><tbody>
+<tr><td>一</td><td><a href="#why" style="text-decoration:none">为什么做</a></td><td class="sec">需求是真的：三条证据、四个数、三个像她的人、窗口</td></tr>
+<tr><td>二</td><td><a href="#what" style="text-decoration:none">做什么</a></td><td class="sec">两样东西，产品一屏一屏看</td></tr>
+<tr><td>三</td><td><a href="#design" style="text-decoration:none">为什么这么做</a></td><td class="sec">七个取舍，每个一句理由</td></tr>
+<tr><td>四</td><td><a href="#teach" style="text-decoration:none">怎么去教</a></td><td class="sec">教 AI 不教站：她打一段话，AI 做出来，不对再说一句，每步真图</td></tr>
+</tbody></table></section>
+
+<!-- 一 为什么做 -->
+<section class="p sec" id="why"><div class="k">一</div><h1>为什么做</h1><p class="big">桐铃要的不是更多物料，<br>是「有人在看我们」。</p></section>
+
+<section class="p"><div class="split"><img class="shot" src="img/案例/维权信.png" alt=""><div><div class="k">证据 1 · 粉丝写过信</div><h2>2026 年 7 月，后援会发信，工作室道歉。</h2><p>信批评工作室「沟通不畅、反黑及舆情处理滞后」，宣布暂停打投。信是对着工作室说的，没有一句怪她。</p><p>粉丝生气的点不是「东西少」，是「没人看我们」。</p><p class="src">sina.cn · 百度百科「后援会致歉」<span class="tag hi">置信度 高</span></p></div></div></section>
+
+<section class="p"><div class="split"><img class="shot" src="img/案例/奇遇记.png" alt=""><div><div class="k">证据 2 · 她陪粉丝玩过</div><h2>2025 微博奇遇记，「李一桐与粉丝趣味『你画我猜』」。</h2><p>线上心愿池累计超过 1 亿次奇遇值，主话题阅读量超过 60 亿。她不需要被说服接受「和粉丝一起玩」，她做过，桐铃记得。</p><p class="src">ent.tom.com · 平台宣传稿<span class="tag mid">置信度 中</span></p></div></div></section>
+
+<section class="p"><div class="split"><img class="shot" src="img/案例/联合早报.png" alt=""><div><div class="k">证据 3 · 她的底线</div><h2>2026 年 4 月，爱奇艺宣布「AI 艺人库」，她通过工作室和对接账号表示：没签过任何 AI 授权。</h2><p>【事实】她公开说的只有这一句。她对「用 AI 做别的东西」没有表过态，不知道她怎么想。</p><p>【推断】所以这两件东西把她说过的那条当成硬边界：不碰脸、不碰声音，系统写死。至于她愿不愿意做别的，当面问她，不替她答。</p><p class="src"><a href="https://www.zaobao.com.sg/news/china/story20260421-8926766" target="_blank">联合早报 2026-04-21</a> · 调研笔记第 7 条<span class="tag hi">置信度 高</span></p></div></div></section>
+
+<section class="p"><div class="k">三条放在一起</div><div class="vows"><div><b>粉丝要的</b><span>直接一点看到她，中间不经过别人</span></div><div><b>她愿意的</b><span>陪粉丝玩，她做过</span></div><div><b>她说过的</b><span>没签过 AI 授权；别的没表过态</span></div></div><p class="big" style="margin-top:48px">两件东西只碰前两条，第三条是硬边界。<br>她愿不愿意，当面问她。</p></section>
+
+<section class="p"><div class="k">一 · 这种东西有多大</div><h1>四个数</h1><p class="sub">数字按原文，不加码。让她自己看完，不用念。</p></section>
+
+<section class="p"><div class="split"><img class="shot" src="img/案例/永夜星河.png" alt=""><div><div class="k">《永夜星河》边追剧边抽卡 · 2024 抖音</div><p class="num">1.3 亿访问<br>700 万人抽卡</p><p>抖音剧集年度报告，另带动剧名搜索 3500 万次。内地剧宣里「收集角色卡」类小玩法做到了亿级访问。</p><p class="src">犀牛娱乐 · k.sina.cn · 媒体转述报告<span class="tag mid">置信度 中</span></p></div></div></section>
+
+<section class="p"><div class="split"><img class="shot" src="img/案例/欢乐颂.png" alt=""><div><div class="k">网易哒哒《解锁你的欢乐颂人设》· 2016</div><p class="num">3100 万浏览</p><p>「测你是剧里谁」的 H5。复盘结论：结果定制化、是正面人设才有人转；结果是减分的形容词就没人转。</p><p class="src">woshipm.com · 行业复盘，是浏览量不是参与人数<span class="tag mid">置信度 中</span></p></div></div></section>
+
+<section class="p"><div class="split"><img class="shot" src="img/案例/SBTI.png" alt=""><div><div class="k">SBTI 恶搞人格测试 · 2026-04-09</div><p class="num">一夜刷屏<br>作者涨粉 12 万</p><p>B 站 UP 主用 AI 写的测试，不到 2000 行代码，31 道题。黄晓明晒出「送钱者」说「是我本人」，苏醒、蓝盈莹、华晨宇跟着晒。做一个测试的技术成本几乎为零，难的是结果好不好玩。</p><p class="src">中国青年报 · cnBeta<span class="tag hi">置信度 高</span></p></div></div></section>
+
+<section class="p"><div class="split"><img class="shot" src="img/案例/Wrapped.png" alt=""><div><div class="k">Spotify Wrapped 2025 · 2025-12-03</div><p class="num">首日 5 亿次分享</p><p>上线 24 小时 2 亿人看、5 亿次分享；单独一张「听歌年龄」卡被分享 6500 万次。一张关于「你是谁」的卡，本身就是分享动机。</p><p class="src">TechCrunch · 官方数据<span class="tag hi">置信度 高</span></p></div></div></section>
+
+<section class="p"><p class="big">一张「你是谁」的卡，<br>就能有这么多人晒。</p></section>
+
+<section class="p"><div class="k">一 · 跟她很像的人</div><h1>已经在做</h1><p class="sub">三个人，三种身份，同一个动作。</p></section>
+
+<section class="p"><div class="split"><img class="shot" src="img/案例/赵丽颖.png" alt=""><div><div class="k">赵丽颖、谢娜、杜华 · 2026-10-11</div><h2>一线女演员亲自示范「用 AI 做个东西」。</h2><p>发起「AI 潮玩人气大赛」：赵丽颖先公开自己用 AI 做的小猫潮玩，再带粉丝跟着做，大众投票选。两周前刚上线。</p><p class="src">sdenews.cn · 单一原文，多家转述一致<span class="tag mid">置信度 中</span></p></div></div></section>
+
+<section class="p"><div class="split"><img class="shot" src="img/案例/扎克鸡.png" alt=""><div><div class="k">B 站「扎克鸡」· 2026-10-22 北京日报</div><h2>「我的粉丝是产品经理、测试员、内容策划。」</h2><p>粉丝在评论区提需求，他用 AI 做出来，首发视频播放破 300 万。</p><p class="src">中青网转载北京日报<span class="tag hi">置信度 高</span></p></div></div></section>
+
+<section class="p"><div class="split"><img class="shot" src="img/案例/小猫补光灯.png" alt=""><div><div class="k">「小猫补光灯」· 报道 2026-05</div><h2>不会编程的人，一小时做出 App，4 小时冲上付费榜第一。</h2><p>点子来自小红书上真实的一句需求。下载 30 万到 50 万次。</p><p class="src">中新网<span class="tag hi">置信度 高</span></p></div></div></section>
+
+<section class="p"><p class="big">这三个人没有自己做一行东西。<br>他们只是出现，然后挑。</p><p class="sub" style="margin-top:20px">这正是女演员要做的全部。</p></section>
+
+<section class="p"><div class="split"><img class="shot" src="img/案例/B站Toy.png" alt=""><div><div class="k">一 · 为什么是现在</div><h2>《美人余》在播，通道已经开了。</h2><p>《美人余》2026-10-09 起腾讯视频、东方卫视播出，桐铃每天在超话聊剧。《我不是大师》一人五个身份，本身就是出题素材。</p><p>B 站 Toy 官方页写明适合人格测试、粉丝抽卡、小游戏；抖音「互动空间」、小红书「小工具」同期开放。粉丝做的小玩意有地方发。</p><p class="src">维基百科 · bilibili.com/toy · 钛媒体<span class="tag hi">置信度 高</span></p></div></div></section>
+
+<section class="p"><div class="k">反面也要知道</div><p class="big">「亲手抠图，哪怕抠错了也是一段开心的体验。」</p><p class="sub" style="margin-top:18px">粉丝要的是自己的心意。所以：点子是粉丝出的，挑中哪一个是女演员亲手点的，AI 只做中间那段。</p><p class="src">虎嗅 2025-04，粉丝原话</p></section>
+
+<!-- 二 做什么 -->
+<section class="p sec" id="what"><div class="k">二</div><h1>做什么</h1><p class="big">两样东西，她每周两下。</p></section>
+
+<section class="p"><div class="two"><div><a href="#demo-quiz" style="text-decoration:none"><img src="../app/assets/ill-quiz.jpg" alt=""><b>桐铃小测试 <span class="go">往下点真的 ↓</span></b></a><p>粉丝答 8 道题，得一张「你是哪种桐铃」的卡。题目从超话里她们自己聊的话里来，每周一套。女演员点头才发。</p></div><div><a href="#demo-vibe" style="text-decoration:none"><img src="../app/assets/ill-vibe.jpg" alt=""><b>桐铃 vibecoding <span class="go">往下点真的 ↓</span></b></a><p>粉丝随口说一句「想要一个追剧倒计时」，AI 当场做成能玩的小网页，挂在超话里，署那个粉丝的名。女演员每周点名一个。</p></div></div></section>
+
+<section class="p live" id="demo-quiz"><div class="k">二 · 产品演示 · 桐铃小测试</div><h2>这就是真的产品，直接在下面点。</h2>
+<div class="tabs" data-for="f-quiz"><button class="on" data-h="#/quiz">本周测试</button><button data-h="#/quiz/library">测试库</button><button data-h="#/quiz/studio">候选审核</button><button data-h="#/quiz/settings">设置</button><a href="../index.html#/quiz" target="_blank">新窗口打开 ↗</a></div>
+<iframe id="f-quiz" src="../index.html#/quiz" title="桐铃小测试"></iframe>
+<p class="cap"><b>粉丝走的：</b>开始测试 → 8 题 → 结果卡 → 保存图片。<b>她走的：</b>候选审核 → 点头发布 / 打回重做。接入 AI 后候选审核里有「真出一套」。</p></section>
+
+<section class="p live" id="demo-vibe"><div class="k">二 · 产品演示 · 桐铃 vibecoding</div><h2>这也是真的，粉丝一句话，AI 做出来，她点名。</h2>
+<div class="tabs" data-for="f-vibe"><button class="on" data-h="#/vibe">总览</button><button data-h="#/vibe/ideas">点子池</button><button data-h="#/vibe/build">做出来</button><button data-h="#/vibe/wall">作品墙</button><button data-h="#/vibe/pick">本周点名</button><a href="../index.html#/vibe" target="_blank">新窗口打开 ↗</a></div>
+<iframe id="f-vibe" src="../index.html#/vibe" title="桐铃 vibecoding"></iframe>
+<p class="cap"><b>粉丝走的：</b>点子池投一句话。<b>团队走的：</b>做出来（接入 AI 后能「真做出来」，先试一句带「声音」的看它拦）。<b>她走的：</b>本周点名 → 玩 → 点名 → 写一句话。</p></section>
+
+<section class="p live" id="demo-today"><div class="k">二 · 她平时只看这一页</div><h2>「今天」：待点头几个、待点名几个，各一个「去做」。</h2>
+<div class="tabs" data-for="f-today"><button class="on" data-h="#/today">今天</button><button data-h="#/connect">接入 AI</button><button data-h="#/picks">女演员挑的</button><a href="../index.html#/today" target="_blank">新窗口打开 ↗</a></div>
+<iframe id="f-today" src="../index.html#/today" title="今天"></iframe>
+<p class="cap">页面里的人数、留言是演示假数据。接入 AI 的钥匙只存在这台设备的浏览器里，不上传。</p></section>
+
+<section class="p"><div class="k">二 · 一周长什么样</div><table><thead><tr><th>谁</th><th>小测试</th><th>小玩意</th></tr></thead><tbody>
+<tr><td>团队</td><td>从超话收 20 条桐铃最爱聊的话题</td><td>在超话发一条征集</td></tr>
+<tr><td>AI</td><td>出 3 个测试初稿，各配一张结果卡</td><td>挑 3 个点子做成小页面</td></tr>
+<tr><td>女演员</td><td>周四点头一个，周五晚八点上线</td><td>周日点名一个</td></tr>
+<tr><td>看什么</td><td>结果卡在超话的晒图次数</td><td>每个小玩意的试玩人次、路人占比</td></tr>
+</tbody></table></section>
+
+<section class="p"><div class="k">二 · 不做什么</div><div class="vows"><div><b>不碰脸，不碰声音</b><span>系统写死，碰到就拒绝并写出理由</span></div><div><b>不点头，不发</b><span>每一样发出去之前都要她本人点一下</span></div><div><b>不碰工作</b><span>行程、合同、代言、舆情，不进这两件东西</span></div></div></section>
+
+<section class="p"><div class="k">二 · 现状</div><ul><li>两样都做成了能用的网页，能真跑：真出题、真做小页面、真拦禁区。</li><li>页面上的人数、留言、晒图率是演示假数据，页脚写明了；真数据跑起来后人工回填。</li><li>线上公开链接还是旧的四件事版；当面讲用本地两件事版。</li><li>跑一个季度 12 周，按月结，随时停。报价【待定】。</li></ul></section>
+
+<!-- 三 为什么这么做 -->
+<section class="p sec" id="design"><div class="k">三</div><h1>为什么这么做</h1><p class="big">七个取舍，每个一句理由。<br>她问到哪条，答哪条。</p></section>
+
+<section class="p"><div class="k">取舍 1</div><h2>为什么只两样，不是四样</h2><p class="sub">第一次要她记住的只能是两个名字。两样正好覆盖她能做的两种「挑」：挑内容（点头）、挑作品（点名）。其他方向留着，她要了再开。</p></section>
+<section class="p"><div class="k">取舍 2</div><h2>为什么她只挑，不做</h2><p class="sub">她没时间，进组就断，所以只能是每周两下。粉丝要的是「她看了我们」，一次亲手点名比十个物料管用。像她的人都这么做：赵丽颖只是出现，扎克鸡只是选。系统写死：点名只能她本人点。</p></section>
+<section class="p"><div class="k">取舍 3</div><h2>为什么不用脸和声音</h2><p class="sub">她 4 月公开说过没签 AI 授权，这是她的底线，也是法律的底线。不是「我们答应不用」，是「系统里写死了不能用」。承诺她听过太多，当面拦住一次她才信。</p></section>
+<section class="p"><div class="k">取舍 4</div><h2>为什么每周，不是一次</h2><p class="sub">奇遇记是一次性活动，热闹完就散。维权信说明粉丝要的是持续被看见。固定周四、周日，粉丝有盼头，她的负担不变。</p></section>
+<section class="p"><div class="k">取舍 5</div><h2>为什么真跑，不放 PPT</h2><p class="sub">不会电脑的人信眼睛不信嘴。她亲手答八题、拿到一张卡、看一句点子变成能玩的东西，比任何介绍有用。所以演示前必须接好钥匙、带热点。</p></section>
+<section class="p"><div class="k">取舍 6</div><h2>为什么先讲为什么，再讲是什么，最后才点这里</h2><p class="sub">上来就「点这里」，她会问「我为什么要点」。顺序是：她的经历、问题在哪、数字、同类人、新做法、方案。这份课件就是按这个排的。</p></section>
+<section class="p"><div class="k">取舍 7</div><h2>为什么她亲手点，不是老师替她点</h2><p class="sub">我做你看，一起做，你自己做。老师替她点完她还是不会，也不信。验收不是她说「懂了」，是她手里真有一张自己答出来的卡、真点过一次点头、一次点名。</p></section>
+
+<!-- 四 怎么去教 -->
+<section class="p sec" id="teach"><div class="k">四</div><h1>怎么去教</h1><p class="big">教的是 AI，不是我们的站。<br>她用自己的手机，打开一个 AI，打一段话，出来一个能玩的东西。</p><p class="sub" style="margin-top:18px">两课，各做出一样。下面每一步的图都是今天真做出来的：这段话真发给了 AI，AI 真回了，回的东西真跑起来了。课时、分几次，老师定。</p></section>
+
+<section class="p"><div class="k">从哪开始 · 用什么软件</div><h2>她手机上任何一个会聊天的 AI。</h2><table style="max-width:1000px"><thead><tr><th>软件</th><th>打完字之后</th><th>置信度</th></tr></thead><tbody>
+<tr><td>Gemini</td><td>Canvas 里能直接预览网页，点着玩</td><td>高 · 官方说明</td></tr>
+<tr><td>ChatGPT</td><td>代码块上切「预览」就能看网页</td><td>高 · 官方帮助中心</td></tr>
+<tr><td>豆包</td><td>网页版、电脑版有「HTML 预览」；手机 App 上有没有【未知】</td><td>中 · 媒体报道</td></tr>
+</tbody></table><p class="do">课上用哪个，老师定；三个的打法一样。我们的站在这一章只出现一次：课前给她看「做出来是这样的」。</p></section>
+
+<section class="p sec" style="margin-top:0;border-top:0;padding-top:80px"><div class="k">课一</div><h1>做一套小测试</h1><p class="sub">她打一段话 → AI 回一段代码 → 打开就是测试 → 不对就再说一句 → 发给粉丝</p></section>
+
+<section class="p"><div class="k">课一 · 第一步 · 她打的话</div><h2>打开 AI，把这段话打进去。</h2><pre class="prompt">帮我做一个「你是哪种桐铃」小测试网页。桐铃是演员李一桐的粉丝名。
+8 道题，每题 4 个选项，答完给一张结果卡：写是哪种桐铃、一句夸粉丝的话、三个标签。题目围绕她在播的剧《美人余》和粉丝追剧的日常，轻松口语。
+要求：只给我一个完整的 HTML 文件，不要解释；不联网、不用外部资源；不用任何人的照片和声音；不问个人信息；手机上好看，米白底、墨黑字、深绿主色；顶上写一行小字「AI 生成 · 桐铃小测试」。</pre><p class="cap">第一句说要什么，第二句说内容，第三句是规矩。规矩那三行每次都一样，存在备忘录里复制就行。<b>她自己打，老师不代打。</b></p></section>
+
+<section class="p"><div class="split"><img class="shot" src="img/教/课一-0-AI回的.png" alt=""><div><div class="k">课一 · 第二步 · AI 回的</div><h2>回来一大段代码，一个字都不用看。</h2><p>这是 AI 真回的，492 行。她要知道的只有一件事：这一大段就是那个测试，像一张还没冲洗的底片。</p><p>Gemini 和 ChatGPT 会在旁边给一个「预览」，点一下就冲洗出来了。没有预览的，复制这段存成一个 .html 文件，用浏览器打开。</p></div></div></section>
+
+<section class="p"><div class="k">课一 · 第三步 · 打开就是测试</div><div class="phones"><div><img class="shot" src="img/教/课一-1-打开.png" alt=""><p class="cap">打开。AI 自己起的名字：叮铃铃～你是哪种桐铃？</p></div><div><img class="shot" src="img/教/课一-2-答题.png" alt=""><p class="cap">答题。8 道，题目围绕《美人余》和追剧日常，都是 AI 按她那段话出的。</p></div><div><img class="shot" src="img/教/课一-3a-结果卡空的.png" alt=""><p class="cap">答完，结果卡是空的。<b>第一版有 bug，这很正常。</b></p></div></div></section>
+
+<section class="p"><div class="split"><img class="shot" src="img/教/课一-3-结果卡.png" alt=""><div><div class="k">课一 · 第四步 · 不对就再说一句</div><h2>不用找原因，把看到的告诉它。</h2><pre class="prompt" style="font-size:14px">答完 8 题，结果卡是空的：没显示是哪种桐铃、没显示那句话和三个标签。请修好，还是只给我一个完整的 HTML 文件，不要解释。</pre><p style="margin-top:14px">这句真发了，AI 真改了。再打开，结果卡出来了：「显微镜级·细节控桐铃」，三个标签，一句夸粉丝的话。</p><p>这一步是这节课最重要的一步：<b>她学会的不是做测试，是「出了问题跟它说一句」。</b></p></div></div></section>
+
+<section class="p"><div class="k">课一 · 第五步 · 发给粉丝</div><div class="vows"><div><b>最简单</b><span>她自己答一遍，把结果卡截图发超话：「桐铃们来测测你是哪种」。粉丝要玩，团队把文件放到站点或任何一个网址上，链接发出去。</span></div><div><b>挂在平台里</b><span>B 站 Toy、小红书小工具、抖音互动空间都能挂 AI 做的小网页。具体怎么传【未知】，团队先各走一遍。</span></div><div><b>每周</b><span>以后每周团队把这段话里的剧情换一句，出一套，她看一眼点头。她那一下还是周四那一下。</span></div></div><p class="src" style="margin-top:28px">练到：她自己打过那段话、自己打开过、自己回过一句「不对」、手里有自己那张结果卡</p></section>
+
+<section class="p sec" style="margin-top:0;border-top:0;padding-top:80px"><div class="k">课二</div><h1>做一个小玩意</h1><p class="sub">粉丝的一句话 → 她打进去 → AI 做出来 → 她点名</p></section>
+
+<section class="p"><div class="k">课二 · 第一步 · 她打的话</div><h2>把粉丝那句话放进去，规矩不变。</h2><pre class="prompt">帮我做一个追《美人余》时的喝水提醒小网页。《美人余》是演员李一桐在播的剧。
+打开后按一下「开始追剧」，每隔 20 分钟弹一句提醒喝水的话，能看到今天喝了几杯，能重置。
+要求：只给我一个完整的 HTML 文件，不要解释；不联网、不用外部资源；不用任何人的照片和声音；不问个人信息；手机上好看，米白底、墨黑字、深绿主色；顶上写一行小字「AI 生成 · 桐铃 vibecoding」，下面一行「点子来自 @桐铃小陈」。</pre><p class="cap">粉丝说的是「追剧的时候提醒我喝水」。她只加了一句「每隔 20 分钟」。规矩三行和课一一模一样，多了「点子来自 @谁」。</p></section>
+
+<section class="p"><div class="k">课二 · 第二、三步 · AI 回的，打开就能用</div><div class="phones"><div><img class="shot" src="img/教/课二-0-AI回的.png" alt=""><p class="cap">AI 真回的，541 行，照样不用看。</p></div><div><img class="shot" src="img/教/课二-1-打开.png" alt=""><p class="cap">打开。AI 自己起名「《美人余》茶水间」，顶上写着「点子来自 @桐铃小陈」。</p></div><div><img class="shot" src="img/教/课二-2-开始追剧.png" alt=""><p class="cap">按「开始追剧」，20 分钟倒计时走起来，喝了一杯点一下。</p></div></div><p class="do">这个第一版就能用。要是不能用，和课一一样：把看到的说给它。</p></section>
+
+<section class="p"><div class="k">课二 · 第四步 · 发回去，她点名</div><div class="vows"><div><b>发回超话</b><span>团队把小玩意放到网址上，发回超话，写上是哪位粉丝的点子。</span></div><div><b>她点名</b><span>每周日，三个粉丝点子做出来的小玩意，她玩两下，挑一个，说一句为什么喜欢。那句话是发给粉丝的，她自己写。</span></div><div><b>禁区</b><span>粉丝要「用她的声音」「她的照片」的，不做。规矩三行里写着，AI 会拒绝；团队再看一遍。</span></div></div><p class="src" style="margin-top:28px">练到：她自己把一句粉丝的话做成了一个能用的东西，自己点过一次名、写过那句话</p></section>
+
+<section class="p"><div class="k">四 · 两课对照</div><table><thead><tr><th></th><th>课一 小测试</th><th>课二 小玩意</th></tr></thead><tbody>
+<tr><td>她打的</td><td>要一套测试 + 内容 + 规矩三行</td><td>粉丝那句话 + 规矩三行</td></tr>
+<tr><td>AI 回的</td><td>一段代码（今天 492 行）</td><td>一段代码（今天 541 行）</td></tr>
+<tr><td>打开</td><td>预览，或存成 .html 用浏览器开</td><td>同左</td></tr>
+<tr><td>不对</td><td>把看到的说一句，它改（今天改了一次）</td><td>同左（今天一次就对）</td></tr>
+<tr><td>发</td><td>结果卡截图发超话；文件上网址给粉丝玩</td><td>文件上网址发回超话，署粉丝的名</td></tr>
+<tr><td>她每周</td><td>周四看一眼，点头</td><td>周日玩两下，点名，写一句</td></tr>
+</tbody></table><p class="do">教法：每一步先老师做一遍她看，再她做老师看，错了不替她改，让她跟 AI 说。设备在她手里。</p></section>
+
+<section class="p"><div class="k">四 · 全程六条不要</div><ul class="s"><li>不说技术词：模型、代码、沙盒、钥匙、接入。说「它」「做出来」「拦住」。</li><li>不替她打字，不替她改。错了让她跟 AI 说，她会的是这个。</li><li>不夸。不说「很简单」「肯定火」。让她自己看数、自己拿到卡。</li><li>不把假数据说成真的。她问就直说是演示用的。</li><li>不碰她的工作：合同、通告、代言、舆情一个字不提；维权信只点一句就翻。</li><li>不提任何其他艺人的名字，案例里的名字除外。</li></ul></section>
+
+<section class="p"><div class="k">四 · 讲完怎么算讲会了</div><p class="big">不看任何东西，她能说出两个名字和每周的两天；<br>她手里有一张自己做出来、自己答出来的结果卡；<br>她自己跟 AI 说过一句「不对」，看着它改好过。</p><p class="do">课后：头两周她点那两下时团队在微信里等着，卡住了当场说。连着两周她自己点完，就不用再陪。</p></section>
+
+<section class="p sec" id="qa"><div class="k">附 · 她会问的</div><table><tbody>
+<tr><td>会不会用到我的脸和声音</td><td>不会，系统写死，刚才亲眼看它拦了一句。发出去的东西都标「AI 生成」。</td></tr>
+<tr><td>粉丝会不会觉得全是 AI</td><td>题目从桐铃自己的话里来，点子是桐铃提的，挑中哪一个是她亲手点的。AI 只做中间那段。</td></tr>
+<tr><td>进组太忙顾不上</td><td>对接人代点，或那周顺延。不点头就什么都不发，断更不会出事。</td></tr>
+<tr><td>谁来做</td><td>团队出稿、复核、发超话、回填数据；她只点。</td></tr>
+<tr><td>多少钱、多久</td><td>一个季度十二周，按月结，随时停。报价【待定】。</td></tr>
+<tr><td>数字是真的吗</td><td>案例数字按原文带链接；页面上的人数是演示假数据。</td></tr>
+<tr><td>能不能加别的</td><td>能。先跑这两样，想要别的方向再开。</td></tr>
+</tbody></table></section>
+
+<section class="p"><div class="k">出处与红线</div><p class="sub">案例来自项目内「案例佐证」两份调研（2026-10-23）和「调研笔记」（2026-10-22），每条核过原文，截图取自原文页面。产品截图取自 2026-10-24 本地两件事版站点。</p><p class="sub" style="margin-top:16px">红线：不用她的脸和声音；不碰她的工作；不收集粉丝个人信息。</p><p class="src"><a href="讲课手册.html">讲课手册</a> · <a href="index.html">三页</a> · <a href="../index.html" target="_blank">站点</a></p></section>
+
+</div>
+<div class="foot">两件给桐铃玩的东西 · 课件 · 2026-10-24 · <a href="讲课手册.html">讲课手册</a> · <a href="index.html">三页</a></div>
+<script>
+  document.querySelectorAll('.tabs').forEach(t => { const f = document.getElementById(t.dataset.for); t.querySelectorAll('button').forEach(b => b.onclick = () => { f.src = '../index.html' + b.dataset.h; t.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); }); });
+</script>
+</body>
+</html>

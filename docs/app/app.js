@@ -74,8 +74,17 @@ const App = (() => {
 
   /* ---------- 产品注册与路由 ---------- */
   const products = {};
-  const ORDER = ['radar', 'replies', 'quiz', 'vibe'];
+  const ALL = ['radar', 'replies', 'quiz', 'vibe'];
+  /* 暂时关闭的产品（2026-10-24 他定：先只留 3 小测试、4 vibecoding）。代码全保留，恢复时从这里删掉即可 */
+  const OFF = ['radar', 'replies'];
+  const ORDER = ALL.filter(id => !OFF.includes(id));
   const register = p => { products[p.id] = p; };
+  const live = () => ORDER.filter(k => products[k]);
+  const CN = n => '零一两三四五六七八九'[n] || String(n);
+  const nWord = () => CN(live().length);
+  const SITE = () => `这一年 · ${nWord()}件事`;
+  /* 首页 / 页脚那句「一个替女演员守住脸，几个让粉丝离女演员更近」，按在线的产品算 */
+  const splitLine = () => { const g = live().filter(k => products[k].accent === 'guard').length, f = live().length - g; return [g ? `${CN(g)}个替女演员守住脸` : '', f ? `${CN(f)}个让粉丝离女演员更近` : ''].filter(Boolean).join('，'); };
   let current = null;
 
   function route() {
@@ -87,10 +96,11 @@ const App = (() => {
     current = null;
     if (window.speechSynthesis) speechSynthesis.cancel();
     $$('.nav .links a').forEach(a => a.classList.toggle('on', a.dataset.route === (id || 'home')));
+    if (id && products[id] && OFF.includes(id)) { location.replace('#/'); return; }
     if (id && products[id]) {
       const p = products[id];
       document.documentElement.dataset.accent = p.accent;
-      document.title = `${p.name} · 这一年 4 件事`;
+      document.title = `${p.name} · ${SITE()}`;
       root.innerHTML = productFrame(p);
       current = p;
       const mountRoot = $('#p-app', root) || root;
@@ -99,13 +109,13 @@ const App = (() => {
       if (rest.length) { const d = $('#p-desk', root); if (d) window.scrollTo(0, d.offsetTop - 70); else window.scrollTo(0, 0); } else window.scrollTo(0, 0);
       return;
     }
-    if (id === 'connect') { document.documentElement.dataset.accent = 'guard'; document.title = '接入 · 这一年四件事'; renderConnect(root); window.scrollTo(0, 0); return; }
-    if (id === 'profile') { document.documentElement.dataset.accent = 'quiz'; document.title = '女演员的档案 · 这一年四件事'; renderProfile(root); window.scrollTo(0, 0); return; }
-    if (id === 'today') { document.documentElement.dataset.accent = 'fans'; document.title = '今天 · 这一年四件事'; renderToday(root); window.scrollTo(0, 0); return; }
-    if (id === 'cases') { document.documentElement.dataset.accent = 'guard'; document.title = '案例佐证 · 这一年四件事'; renderCases(root, sub); window.scrollTo(0, 0); return; }
-    if (id === 'picks') { document.documentElement.dataset.accent = 'fans'; document.title = '女演员挑的 · 这一年四件事'; renderPicks(root); window.scrollTo(0, 0); return; }
+    if (id === 'connect') { document.documentElement.dataset.accent = 'guard'; document.title = `接入 · ${SITE()}`; renderConnect(root); window.scrollTo(0, 0); return; }
+    if (id === 'profile') { document.documentElement.dataset.accent = 'quiz'; document.title = `女演员的档案 · ${SITE()}`; renderProfile(root); window.scrollTo(0, 0); return; }
+    if (id === 'today') { document.documentElement.dataset.accent = 'fans'; document.title = `今天 · ${SITE()}`; renderToday(root); window.scrollTo(0, 0); return; }
+    if (id === 'cases') { document.documentElement.dataset.accent = 'guard'; document.title = `案例佐证 · ${SITE()}`; renderCases(root, sub); window.scrollTo(0, 0); return; }
+    if (id === 'picks') { document.documentElement.dataset.accent = 'fans'; document.title = `女演员挑的 · ${SITE()}`; renderPicks(root); window.scrollTo(0, 0); return; }
     document.documentElement.dataset.accent = 'quiz';
-    document.title = '这一年，AI 能接住的四件事';
+    document.title = `这一年，AI 能接住的${nWord()}件事`;
     renderHome(root);
     if (id) { const t = $('#' + id); if (t) setTimeout(() => t.scrollIntoView({ behavior: 'smooth' }), 50); } else window.scrollTo(0, 0);
   }
@@ -137,14 +147,17 @@ const App = (() => {
   function renderHome(root) {
     const P = ORDER.map(id => products[id]).filter(Boolean);
     const dateKey = w => { const m = w.match(/(\d{4})\D+(\d{1,2})(?:\D+(\d{1,2}))?/); return m ? +m[1] * 10000 + +m[2] * 100 + (+m[3] || 0) : 0; };
-    const timeline = [...TIMELINE].sort((a, b) => dateKey(a.when) - dateKey(b.when)).map(t => `<article class="story-card">
+    /* 前因只留和在线产品有关的：guard 条归雷达，fans 条归另外三个 */
+    const hasGuard = P.some(p => p.accent === 'guard'), hasFans = P.some(p => p.accent !== 'guard');
+    const TL = TIMELINE.filter(t => (t.to === 'guard' ? hasGuard : hasFans));
+    const timeline = [...TL].sort((a, b) => dateKey(a.when) - dateKey(b.when)).map(t => `<article class="story-card">
         <div class="when">${esc(t.when.replace(/ 年 /g, '.').replace(/ 月 /g, '.').replace(/ 月$/, '').replace(/ 日$/, ''))}<small>${t.to === 'guard' ? '关于女演员的脸' : '关于粉丝'}</small></div>
         <div><h3>${esc(t.head)}</h3><p class="what">${esc(t.what)}</p>
         <div class="so">所以，${esc(t.so)}</div>
         <div class="src">来源 ${t.src.map(s => `<a href="${s[1]}" target="_blank" rel="noopener">${esc(s[0])}</a>`).join('')}</div></div></article>`).join('');
     /* 前因：先给一根时间线，四件事落在哪个月 */
-    const tlEvents = [...TIMELINE].sort((a, b) => dateKey(a.when) - dateKey(b.when)).map(t => { const m = t.when.match(/(\d{4})\D+(\d{1,2})(?:\D+(\d{1,2}))?/); return { t: new Date(+m[1], +m[2] - 1, +(m[3] || 15)).getTime(), l: t.head, sub: `${m[1]}.${m[2]}${m[3] ? '.' + m[3] : ''} · ${t.to === 'guard' ? '关于女演员的脸' : '关于粉丝'}`, c: t.to === 'guard' ? 'var(--c-guard)' : 'var(--c-fans)' }; });
-    const storyViz = `<div class="f-viz"><div class="vh"><b>这一年发生了什么</b><span>${tlEvents.length} 件事，${tlEvents.filter(e => e.c.includes('guard')).length} 件关于脸，${tlEvents.filter(e => e.c.includes('fans')).length} 件关于粉丝</span></div><div class="viz-scroll">${Viz.timeline(tlEvents, { w: 1000, h: 140, maxL: 22, from: new Date(2025, 8, 1).getTime(), to: new Date(2026, 8, 1).getTime(), label: '这一年四件事的时间线' })}</div></div>`;
+    const tlEvents = [...TL].sort((a, b) => dateKey(a.when) - dateKey(b.when)).map(t => { const m = t.when.match(/(\d{4})\D+(\d{1,2})(?:\D+(\d{1,2}))?/); return { t: new Date(+m[1], +m[2] - 1, +(m[3] || 15)).getTime(), l: t.head, sub: `${m[1]}.${m[2]}${m[3] ? '.' + m[3] : ''} · ${t.to === 'guard' ? '关于女演员的脸' : '关于粉丝'}`, c: t.to === 'guard' ? 'var(--c-guard)' : 'var(--c-fans)' }; });
+    const storyViz = `<div class="f-viz"><div class="vh"><b>这一年发生了什么</b><span>${tlEvents.length} 件事，${tlEvents.filter(e => e.c.includes('guard')).length} 件关于脸，${tlEvents.filter(e => e.c.includes('fans')).length} 件关于粉丝</span></div><div class="viz-scroll">${Viz.timeline(tlEvents, { w: 1000, h: 140, maxL: 22, from: new Date(2025, 8, 1).getTime(), to: new Date(2026, 8, 1).getTime(), label: `这一年${nWord()}件事的时间线` })}</div></div>`;
     /* 案例：68 条怎么分布 */
     const caseAll = typeof CASES !== 'undefined' ? ORDER.filter(k => products[k]).flatMap(k => (CASES[k] || []).map(c => ({ ...c, p: k }))) : [];
     const caseViz = caseAll.length ? (() => {
@@ -161,13 +174,16 @@ const App = (() => {
         </div></div>`;
     })() : '';
     /* 落地：一周里哪天要她出手 */
-    const weekViz = Viz.weekgrid([
-      { l: 'AI 换脸雷达', days: [0, 0, 0, 0, 0, 0, 0], note: '月底看一页；P0 当天一句话', c: 'var(--c-guard)' },
-      { l: '评论挑信', days: [1, 1, 1, 1, 1, 1, 1], note: '每天收工后 5 分钟', c: 'var(--c-fans)' },
-      { l: '桐铃小测试', days: [0, 0, 0, 2, 0, 0, 0], note: '周四点头，周五 20:00 上线', c: 'var(--c-quiz)' },
-      { l: '桐铃 vibecoding', days: [0, 0, 0, 0, 0, 0, 2], note: '周日点名一个', c: 'var(--c-vibe)' },
-    ], { w: 760, lw: 130, nw: 220, label: '一周里哪天要女演员出手' });
-    const vows = RULES.map(r => `<div class="vow"><div class="mark">不</div><b>${esc(r.head)}</b><p>${esc(r.d)}</p></div>`).join('');
+    const WEEK_ROWS = {
+      radar: { l: 'AI 换脸雷达', days: [0, 0, 0, 0, 0, 0, 0], note: '月底看一页；P0 当天一句话', c: 'var(--c-guard)' },
+      replies: { l: '评论挑信', days: [1, 1, 1, 1, 1, 1, 1], note: '每天收工后 5 分钟', c: 'var(--c-fans)' },
+      quiz: { l: '桐铃小测试', days: [0, 0, 0, 2, 0, 0, 0], note: '周四点头，周五 20:00 上线', c: 'var(--c-quiz)' },
+      vibe: { l: '桐铃 vibecoding', days: [0, 0, 0, 0, 0, 0, 2], note: '周日点名一个', c: 'var(--c-vibe)' },
+    };
+    const weekViz = Viz.weekgrid(ORDER.filter(k => products[k] && WEEK_ROWS[k]).map(k => WEEK_ROWS[k]), { w: 760, lw: 130, nw: 220, label: '一周里哪天要女演员出手' });
+    /* 三个不做：只属于某个产品的那条（only）跟着产品一起下线；提到雷达的补句（radar）也一样 */
+    const RL = RULES.filter(r => !r.only || ORDER.includes(r.only));
+    const vows = RL.map(r => `<div class="vow"><div class="mark">不</div><b>${esc(r.head)}</b><p>${esc(r.d)}${r.radar && ORDER.includes('radar') ? esc(r.radar) : ''}</p></div>`).join('');
     const features = P.map(p => {
       const plan = PLAN[p.demo] || {};
       return `<details class="plan-row" id="f-${p.id}">
@@ -195,8 +211,8 @@ const App = (() => {
           <figure class="f-cover"><img src="${ASSETS}ill-cover.jpg" alt="" onerror="this.parentElement.remove()"></figure>
           <div class="f-intro">
             <i class="sq"></i>
-            <p>这一年女演员的日子，AI 能接住的四件事。</p>
-            <p class="muted">先讲前因：这一年公开报道里发生了什么。再给后果：四个做出来、能直接点、能直接用的东西。一个替女演员守住脸，三个让粉丝离女演员更近。</p>
+            <p>这一年女演员的日子，AI 能接住的${nWord()}件事。</p>
+            <p class="muted">先讲前因：这一年公开报道里发生了什么。再给后果：${nWord()}个做出来、能直接点、能直接用的东西。${splitLine()}。</p>
             <p class="f-links"><a href="#/today">从「今天」开始</a><a href="#story">先看前因</a></p>
           </div>
         </div>
@@ -223,14 +239,14 @@ const App = (() => {
 
       <section class="f-vows" id="rules">
         <div class="in">
-          <p class="f-lead">所有东西都在这三条线以内。</p>
+          <p class="f-lead">所有东西都在这${CN(RL.length)}条线以内。</p>
           <div class="vows">${vows}</div>
         </div>
       </section>
 
       <section class="f-cases" id="cases-teaser">
         <div class="in">
-          <p class="f-lead">别人已经这么做了，而且有数据。四件东西各找了十几到二十几条公开案例，每条都打开原文核对过。</p>
+          <p class="f-lead">别人已经这么做了，而且有数据。${nWord()}件东西各找了十几到二十几条公开案例，每条都打开原文核对过。</p>
           ${caseViz}
           <div class="case-teaser">${ORDER.filter(k => products[k]).map(k => { const top = topCase(k); return `<a class="case-pill" href="#/cases/${k}"><div class="n"><b>${typeof CASES !== 'undefined' ? (CASES[k] || []).length : '—'}</b><span>${esc(CASE_LABEL[k])}</span></div>${top ? `<div class="t"><em>${esc(top.title)}</em><small>${esc(top.proves)}</small></div>` : ''}</a>`; }).join('')}</div>
           <p class="f-links"><a href="#/cases">看全部案例</a></p>
@@ -293,7 +309,7 @@ const App = (() => {
         }
       }
       $$('[data-f]', root).forEach(b => { const [k, v] = b.dataset.f.split(':'); b.classList.toggle('on', f[k] === v); });
-      $('#case-note', root).textContent = f.p === 'all' ? `四个产品共 ${all.length} 条公开案例，每条都打开过原文核对。点开一条看经过和出处。` : (CASES_NOTE[f.p] || '');
+      $('#case-note', root).textContent = f.p === 'all' ? `${nWord()}个产品共 ${all.length} 条公开案例，每条都打开过原文核对。点开一条看经过和出处。` : (CASES_NOTE[f.p] || '');
       ORDER.forEach(k => { const e = $(`[data-f="p:${k}"] em`, root); if (e) e.textContent = counts[k]; });
     };
     root.innerHTML = `<div class="landing"><section class="section cases-page"><div class="in">
@@ -319,12 +335,21 @@ const App = (() => {
   }
 
   /* ---------- 接入 / 档案 / 今天 ---------- */
+  const REAL_LINE = { radar: '真扫网页', replies: '真挑评论', quiz: '真出题', vibe: '真写小玩意' };
+  const REAL_DESC = {
+    radar: p => `「真扫一遍」：用搜索找今天含「${esc(p.keywords.split(',')[0])}」+ 换脸 / 神似 的网页标题，AI 分级进线索表。成人站只看标题。`,
+    replies: () => '「贴真评论」：把一条微博下的评论复制进来，AI 按女演员的语气挑出最该回的几条并起草。',
+    quiz: () => '「真出一套」：按本周剧情现场出题，结果卡照常能存。',
+    vibe: () => '「真做出来」：随口说一句，AI 现场写出能玩的小玩意，当场跑。',
+  };
+  const PROFILE_USE = { replies: '挑信按这里的语气起草', quiz: '小测试按作品出题', vibe: 'vibecoding 按禁区过滤点子', radar: '雷达按关键词扫' };
+  const TODAY_USE = { replies: '该回谁', radar: '有没有新线索', vibe: '这周点名哪个', quiz: '测试数据怎么样' };
   function paintAI() { const a = $('.nav .ai-dot'); if (a) a.classList.toggle('on-ai', AI.ready()); }
   function renderConnect(root) {
     const p = PROFILE.get();
     root.innerHTML = `<div class="landing"><section class="section"><div class="in" style="max-width:720px">
-      <span class="eyebrow">接入</span><h2 style="font-size:32px;margin:10px 0 8px">让四件东西真的跑起来。</h2>
-      <p class="muted">填一把钥匙，四件东西就从演示数据切到真 AI：真挑评论、真出题、真写小玩意、真扫网页。钥匙只存在这台设备的浏览器里，不上传。</p>
+      <span class="eyebrow">接入</span><h2 style="font-size:32px;margin:10px 0 8px">让${nWord()}件东西真的跑起来。</h2>
+      <p class="muted">填一把钥匙，${nWord()}件东西就从演示数据切到真 AI：${live().map(k => REAL_LINE[k]).filter(Boolean).join('、')}。钥匙只存在这台设备的浏览器里，不上传。</p>
       <div class="card" style="margin-top:24px">
         <label class="small muted">Gemini API 钥匙</label>
         <input class="input" id="ai-key" type="password" placeholder="AIza…" value="${esc(AI.key.get())}" style="margin:6px 0 14px">
@@ -333,13 +358,10 @@ const App = (() => {
       </div>
       <div class="card" style="margin-top:14px"><div class="hd"><h3>接入后每件东西多出什么</h3></div>
         <ul class="list">
-          <li><span class="avatar" style="--accent:var(--c-guard)">◎</span><div><b>AI 换脸雷达</b><div class="small muted">「真扫一遍」：用搜索找今天含「${esc(p.keywords.split(',')[0])}」+ 换脸 / 神似 的网页标题，AI 分级进线索表。成人站只看标题。</div></div></li>
-          <li><span class="avatar" style="--accent:var(--c-fans)">✉</span><div><b>评论挑信</b><div class="small muted">「贴真评论」：把一条微博下的评论复制进来，AI 按女演员的语气挑出最该回的几条并起草。</div></div></li>
-          <li><span class="avatar" style="--accent:var(--c-quiz)">✦</span><div><b>桐铃小测试</b><div class="small muted">「真出一套」：按本周剧情现场出题，结果卡照常能存。</div></div></li>
-          <li><span class="avatar" style="--accent:var(--c-vibe)">⌘</span><div><b>桐铃 vibecoding</b><div class="small muted">「真做出来」：随口说一句，AI 现场写出能玩的小玩意，当场跑。</div></div></li>
+          ${live().map(k => `<li><span class="avatar" style="--accent:var(--c-${products[k].accent})">${ICON[k]}</span><div><b>${esc(products[k].name)}</b><div class="small muted">${REAL_DESC[k](p)}</div></div></li>`).join('')}
         </ul></div>
       <div class="row" style="margin-top:16px"><a class="btn" href="#/profile">女演员的档案</a><a class="btn btn-ghost" href="#/today">去「今天」</a></div>
-      <p class="fine muted" style="margin-top:16px">要联网。断网时四件东西自动退回演示数据，不会坏。</p>
+      <p class="fine muted" style="margin-top:16px">要联网。断网时${nWord()}件东西自动退回演示数据，不会坏。</p>
     </div></section></div>`;
     $('#ai-save', root).onclick = async () => {
       AI.key.set($('#ai-key', root).value); AI.setModel($('#ai-model', root).value.trim() || AI.DEFAULT_MODEL); paintAI();
@@ -350,12 +372,12 @@ const App = (() => {
   }
   function renderProfile(root) {
     const p = PROFILE.get();
-    const G = [['女演员是谁', [['name', '名字'], ['fan', '粉丝名'], ['show', '在播的剧'], ['showTime', '更新节奏'], ['works', '作品']]], ['女演员怎么说话', [['persona', '人设关键词'], ['tone', '回复语气']]], ['红线', [['taboo', '禁区'], ['keywords', '雷达关键词（逗号分开）']]]];
+    const G = [['女演员是谁', [['name', '名字'], ['fan', '粉丝名'], ['show', '在播的剧'], ['showTime', '更新节奏'], ['works', '作品']]], ['女演员怎么说话', [['persona', '人设关键词'], ['tone', '回复语气']]], ['红线', [['taboo', '禁区'], ...(ORDER.includes('radar') ? [['keywords', '雷达关键词（逗号分开）']] : [])]]];
     const field = (k, l) => `<label class="small muted">${l}</label>${['works', 'persona', 'taboo', 'tone'].includes(k) ? `<textarea class="textarea" data-k="${k}" style="min-height:70px;margin:6px 0 14px">${esc(p[k])}</textarea>` : `<input class="input" data-k="${k}" value="${esc(p[k])}" style="margin:6px 0 14px">`}`;
     const briefShown = () => PROFILE.brief().replace(/页面文字不用第一人称「我」指代当事人。?/, '');
     root.innerHTML = `<div class="landing"><section class="section"><div class="in" style="max-width:720px">
-      <span class="eyebrow">女演员的档案</span><h2 style="font-size:32px;margin:10px 0 8px">一处填好，四件东西共用。</h2>
-      <p class="muted">挑信按这里的语气起草，小测试按作品出题，vibecoding 按禁区过滤点子，雷达按关键词扫。</p>
+      <span class="eyebrow">女演员的档案</span><h2 style="font-size:32px;margin:10px 0 8px">一处填好，${nWord()}件东西共用。</h2>
+      <p class="muted">${live().map(k => PROFILE_USE[k]).filter(Boolean).join('，')}。</p>
       ${G.map(([t, fs]) => `<div class="card" style="margin-top:18px"><div class="hd"><h3>${t}</h3></div>${fs.map(([k, l]) => field(k, l)).join('')}</div>`).join('')}
       <div class="row" style="margin-top:18px"><button class="btn btn-primary" id="pf-save">保存</button><button class="btn btn-ghost" id="pf-reset">恢复默认</button></div>
       <div class="card" style="margin-top:18px"><div class="hd"><h3>AI 会看到的自我介绍</h3></div><p class="small muted" id="pf-brief">${esc(briefShown())}</p></div>
@@ -381,7 +403,7 @@ const App = (() => {
     root.innerHTML = `<div class="landing"><section class="section today-page"><div class="in" style="max-width:860px">
       <span class="eyebrow">今天 · ${d.getMonth() + 1} 月 ${d.getDate()} 日 周${wk}</span>
       <h2 style="font-size:34px;margin:10px 0 8px">女演员每天只看这一页。</h2>
-      <p class="muted">四件东西把今天要女演员做的事汇到这里：该回谁、有没有新线索、这周点名哪个、测试数据怎么样。每件事一分钟。${AI.ready() ? '' : '<a href="#/connect" style="color:var(--accent);text-decoration:underline">接入 AI</a> 后这里会是真数据。'} <a href="#/profile" style="color:var(--muted);text-decoration:underline">女演员的档案</a></p>
+      <p class="muted">${nWord()}件东西把今天要女演员做的事汇到这里：${live().map(k => TODAY_USE[k]).filter(Boolean).join('、')}。每件事一分钟。${AI.ready() ? '' : '<a href="#/connect" style="color:var(--accent);text-decoration:underline">接入 AI</a> 后这里会是真数据。'} <a href="#/profile" style="color:var(--muted);text-decoration:underline">女演员的档案</a></p>
       <div class="today-grid">${blocks}</div>
       <div class="card year-card" style="margin-top:22px"><div class="hd"><h3>这一年的回忆</h3><button class="btn btn-sm" id="yr-make">重新生成</button></div><div id="yr-out" style="margin-top:12px"></div></div>
     </div></section></div>`;
@@ -392,12 +414,12 @@ const App = (() => {
       const COL = { guard: '#2f6f80', fans: '#9a3f58', quiz: '#4b3d84', vibe: '#2f7a4f' };
       stats.forEach((s, i) => { const gr = g.createRadialGradient(200 + i * 230, 200, 10, 200 + i * 230, 200, 420); gr.addColorStop(0, COL[s.p.accent] + '22'); gr.addColorStop(1, 'transparent'); g.fillStyle = gr; g.fillRect(0, 0, 1080, H); });
       g.fillStyle = '#121212'; g.font = '600 64px "Songti SC","STSong",serif'; g.fillText('这一年，', 80, 200); g.fillText(`${PROFILE.get().name}和${PROFILE.get().fan}`, 80, 290);
-      g.font = '400 30px "PingFang SC",sans-serif'; g.fillStyle = '#6e6a66'; g.fillText(`${d.getFullYear()} 年 · 四件事的记录`, 80, 350);
+      g.font = '400 30px "PingFang SC",sans-serif'; g.fillStyle = '#6e6a66'; g.fillText(`${d.getFullYear()} 年 · ${nWord()}件事的记录`, 80, 350);
       let y = 460;
       stats.forEach(s => { g.fillStyle = COL[s.p.accent]; g.fillRect(80, y - 34, 8, 44); g.fillStyle = '#121212'; g.font = '600 38px "Songti SC","STSong",serif'; g.fillText(s.p.name, 110, y); g.font = '400 30px "PingFang SC",sans-serif'; g.fillStyle = '#4a4744'; (s.year.length ? s.year : ['还没开始']).slice(0, 3).forEach(line => { y += 52; g.fillText(line, 110, y); }); y += 90; });
       g.fillStyle = '#a19c96'; g.font = '400 24px "PingFang SC",sans-serif'; g.fillText(`不碰脸，不碰声音，只做女演员和${PROFILE.get().fan}之间的事 · 数字为演示`, 80, H - 70);
       const url = c.toDataURL('image/png');
-      $('#yr-out', root).innerHTML = `<img src="${url}" style="width:100%;max-width:420px;border-radius:12px;border:1px solid var(--line)"><div><p class="small muted" style="line-height:1.9">把女演员亲自回过的、点名过的、守住的攒成一张图。数字会跟着四件东西里的记录走：回过多少条粉丝、点名过几个作品、下架了几条线索。年底这张卡就是这一年的注脚，可以存下来，也可以发给桐铃。</p><div class="row" style="margin-top:14px"><a class="btn btn-sm btn-primary" download="这一年.png" href="${url}">保存图片</a><button class="btn btn-sm btn-ghost" id="yr-re">重新生成</button></div></div>`;
+      $('#yr-out', root).innerHTML = `<img src="${url}" style="width:100%;max-width:420px;border-radius:12px;border:1px solid var(--line)"><div><p class="small muted" style="line-height:1.9">把女演员亲自点头过的、点名过的攒成一张图。数字会跟着${nWord()}件东西里的记录走。年底这张卡就是这一年的注脚，可以存下来，也可以发给桐铃。</p><div class="row" style="margin-top:14px"><a class="btn btn-sm btn-primary" download="这一年.png" href="${url}">保存图片</a><button class="btn btn-sm btn-ghost" id="yr-re">重新生成</button></div></div>`;
       const re = $('#yr-re', root); if (re) re.onclick = () => $('#yr-make', root).click();
     };
     $('#yr-make', root).click();
@@ -418,6 +440,12 @@ const App = (() => {
 
   /* ---------- 启动 ---------- */
   function boot() {
+    /* 站名、页脚产品栏、页脚那句话都按在线产品数来 */
+    const logo = $('.nav .logo'); if (logo) logo.innerHTML = `<i></i>${esc(SITE())}`;
+    const fh = $('#foot-head'); if (fh) fh.textContent = SITE();
+    const fl = $('#foot-line'); if (fl) fl.textContent = `给女演员的${nWord()}件东西：${splitLine()}。`;
+    const fr = $('#foot-rules'); if (fr) fr.textContent = `${CN(RULES.filter(r => !r.only || ORDER.includes(r.only)).length)}个不做`;
+    const fp = $('#foot-products'); if (fp) fp.innerHTML = `<h4>产品</h4>` + live().map(k => `<a href="#/${k}">${esc(products[k].name)}</a>`).join('');
     const links = $('#nav-links');
     links.innerHTML = `<a href="#/" data-route="home">首页</a><a href="#/today" data-route="today">今天</a>` + ORDER.map(id => products[id]).filter(Boolean).map(p => `<a href="#/${p.id}" data-route="${p.id}">${esc(p.name)}</a>`).join('') + `<a href="#/cases" data-route="cases">案例</a><a href="#/picks" data-route="picks" class="only-m">女演员挑的</a><a href="#/connect" data-route="connect" class="ai-dot only-m"><span class="dot"></span>接入 AI</a>`;
     paintAI();

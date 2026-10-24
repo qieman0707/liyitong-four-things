@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>你是哪种桐铃？</title>
+<style>
+  :root {
+    --bg-color: #FAF8F5;
+    --card-bg: #FFFFFF;
+    --text-main: #222222;
+    --text-sub: #666666;
+    --primary: #1B4D3E;
+    --primary-light: #E8F0ED;
+    --border-color: #E2DDD5;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px 20px 40px;
+  }
+
+  .top-bar {
+    font-size: 12px;
+    color: var(--text-sub);
+    letter-spacing: 1.5px;
+    margin-bottom: 24px;
+    text-align: center;
+    opacity: 0.8;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 440px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border: 1.5px solid var(--border-color);
+    border-radius: 20px;
+    padding: 32px 24px;
+    box-shadow: 0 8px 24px rgba(27, 77, 62, 0.05);
+    transition: all 0.3s ease;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  /* 首页样式 */
+  .title-badge {
+    display: inline-block;
+    background-color: var(--primary-light);
+    color: var(--primary);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 50px;
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 14px;
+    letter-spacing: 0.5px;
+  }
+
+  .desc {
+    font-size: 15px;
+    color: var(--text-sub);
+    margin-bottom: 32px;
+    line-height: 1.7;
+  }
+
+  .btn {
+    display: block;
+    width: 100%;
+    background-color: var(--primary);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 12px;
+    padding: 15px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    transition: transform 0.1s ease, opacity 0.2s ease;
+    letter-spacing: 1px;
+  }
+
+  .btn:active {
+    transform: scale(0.98);
+    opacity: 0.92;
+  }
+
+  .btn-outline {
+    background-color: transparent;
+    color: var(--primary);
+    border: 1.5px solid var(--primary);
+    margin-top: 16px;
+  }
+
+  /* 答题页样式 */
+  .progress-wrap {
+    margin-bottom: 24px;
+  }
+
+  .progress-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--text-sub);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  .progress-bar-bg {
+    width: 100%;
+    height: 6px;
+    background-color: var(--primary-light);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background-color: var(--primary);
+    width: 12.5%;
+    transition: width 0.3s ease;
+    border-radius: 4px;
+  }
+
+  .question-title {
+    font-size: 19px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    color: var(--text-main);
+    min-height: 58px;
+  }
+
+  .options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .option-item {
+    background-color: var(--bg-color);
+    border: 1.5px solid var(--border-color);
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 15px;
+    color: var(--text-main);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+    line-height: 1.5;
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .option-letter {
+    font-weight: 700;
+    color: var(--primary);
+    margin-right: 10px;
+    min-width: 16px;
+  }
+
+  .option-item:hover, .option-item.selected {
+    background-color: var(--primary-light);
+    border-color: var(--primary);
+    color: var(--primary);
+    font-weight: 500;
+  }
+
+  /* 结果卡样式 */
+  .result-card {
+    border: 2px solid var(--primary);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .result-header {
+    font-size: 13px;
+    color: var(--primary);
+    letter-spacing: 1px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .result-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px dashed var(--border-color);
+  }
+
+  .tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .tag {
+    background-color: var(--primary);
+    color: #FFFFFF;
+    font-size: 13px;
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+
+  .praise-box {
+    background-color: var(--bg-color);
+    border-left: 4px solid var(--primary);
+    padding: 16px;
+    border-radius: 0 12px 12px 0;
+    margin-bottom: 28px;
+  }
+
+  .praise-text {
+    font-size: 15px;
+    color: var(--text-main);
+    line-height: 1.75;
+    font-style: normal;
+  }
+
+  .stamp {
+    text-align: right;
+    font-size: 12px;
+    color: var(--text-sub);
+    margin-bottom: 8px;
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar">AI 生成 · 桐铃小测试</div>
+
+<div class="container">
+  <!-- 欢迎页 -->
+  <div id="start-view" class="card">
+    <div class="title-badge">《美人余》热播限定</div>
+    <h1>叮铃铃～你是哪种桐铃？</h1>
+    <p class="desc">
+      最近都在追李一桐的新剧《美人余》吧！<br><br>
+      面对余梦的每一次眼神流转、每一套绝美穿搭，屏幕前的你是忙着拿放大镜扒细节，还是疯狂截屏存美图？来做完这 8 道日常小测试，解锁你的专属桐铃属性卡吧！
+    </p>
+    <button class="btn" onclick="startQuiz()">摇响铜铃 · 开始测试</button>
+  </div>
+
+  <!-- 答题页 -->
+  <div id="quiz-view" class="card hidden">
+    <div class="progress-wrap">
+      <div class="progress-info">
+        <span id="q-step">QUESTION 01/08</span>
+        <span>《美人余》追剧日常</span>
+      </div>
+      <div class="progress-bar-bg">
+        <div id="progress-fill" class="progress-bar-fill"></div>
+      </div>
+    </div>
+    <div id="question-text" class="question-title"></div>
+    <div id="options-box" class="options-list"></div>
+  </div>
+
+  <!-- 结果页 -->
+  <div id="result-view" class="card result-card hidden">
+    <div class="result-header">你的专属桐铃属性是</div>
+    <div id="res-title" class="result-title"></div>
+    
+    <div id="res-tags" class="tags-container"></div>
+    
+    <div class="praise-box">
+      <p id="res-praise" class="praise-text"></p>
+    </div>
+
+    <div class="stamp">—— 永远为李一桐摇响清脆铃声 🔔</div>
+    <button class="btn btn-outline" onclick="resetQuiz()">再测一次</button>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    q: "1. 晚上《美人余》准点更新，你打开视频的第一反应通常是？",
+    options: [
+      { text: "紧盯剧情走向和台词，不放过余梦的任何一个微表情", type: "A" },
+      { text: "先截十九八七张美图！今天这集桐姐的妆造又鲨疯了", type: "B" },
+      { text: "赶紧打开弹幕，边看边发「老婆好美」「桐妹演技绝了」", type: "C" },
+      { text: "泡杯热茶备好零食，安安静静沉浸式享受属于我的追剧时光", type: "D" }
+    ]
+  },
+  {
+    q: "2. 看到《美人余》里一段张力拉满的高光对手戏，你会？",
+    options: [
+      { text: "0.5倍速反复拉进度条，分析她眼角眉梢的层次感", type: "A" },
+      { text: "这段光影氛围感太神了，必须录屏下来当剪辑素材", type: "B" },
+      { text: "立刻转发到闺蜜群和广场：「按头安利！这段不看亏大了！」", type: "C" },
+      { text: "在屏幕前跟着角色一起揪心或姨母笑，心情久久不能平复", type: "D" }
+    ]
+  },
+  {
+    q: "3. 追剧间隙刷到李一桐工作室发的《美人余》剧照和花絮，你的常规操作是？",
+    options: [
+      { text: "从花絮背景和剧本笔记里，猜测后面的剧情发展", type: "A" },
+      { text: "光速保存原图，换上最新壁纸和头像，顺便研究同款穿搭", type: "B" },
+      { text: "火速赶往评论区前排打call，把夸夸小作文安排得明明白白", type: "C" },
+      { text: "看她在片场笑得像个小太阳，自己心情也瞬间变超好", type: "D" }
+    ]
+  },
+  {
+    q: "4. 朋友问你「最近在播的《美人余》好看吗？」，你怎么卖安利？",
+    options: [
+      { text: "从人物弧光讲到宿命感，逻辑清晰地写一篇千字看剧指南", type: "A" },
+      { text: "直接甩过去九宫格动图：「你看这脸、这身段，对眼睛太友好了！」", type: "B" },
+      { text: "拉着朋友一起看两集，全程激情陪聊，充当人形弹幕机", type: "C" },
+      { text: "笑眯眯地说超好看，甚至大方把自己的会员账号借给对方", type: "D" }
+    ]
+  },
+  {
+    q: "5. 如果给你一个机会去《美人余》片场探班，你最想做什么？",
+    options: [
+      { text: "躲在监视器后面，现场观摩她是怎么一秒入戏的", type: "A" },
+      { text: "用相机记录下她认真读剧本的侧影，肯定美得像幅画", type: "B" },
+      { text: "大声告诉她：「余梦特别棒！桐铃永远做你的底气！」", type: "C" },
+      { text: "悄悄放下一杯她爱喝的饮品和手写信，祝她拍戏顺遂开心", type: "D" }
+    ]
+  },
+  {
+    q: "6. 手机相册里专门建的「一桐」文件夹，里面最多的是？",
+    options: [
+      { text: "经典台词截图、角色人物关系图和深度剧评长图", type: "A" },
+      { text: "高清神图、绝美回眸GIF，以及分类整齐的红毯与剧照", type: "B" },
+      { text: "各种可爱的表情包，斗图和安利时随时准备出击", type: "C" },
+      { text: "她日常分享的猫猫狗狗、美食，还有治愈人心的明媚笑容", type: "D" }
+    ]
+  },
+  {
+    q: "7. 《美人余》断更或者等更新的日子里，你一般怎么度过？",
+    options: [
+      { text: "二刷前面的集数找伏笔，顺便把《鹤唳华亭》《狂飙》再温习一遍", type: "A" },
+      { text: "在各个视频平台刷神仙剪刀手产出的《美人余》绝美混剪", type: "B" },
+      { text: "在超话和同好们热火朝天地讨论剧情，一起花式催更", type: "C" },
+      { text: "好好工作好好生活，带着从她身上汲取的元气过好每一天", type: "D" }
+    ]
+  },
+  {
+    q: "8. 作为一名快乐的桐铃，你觉得粉上李一桐最幸福的瞬间是？",
+    options: [
+      { text: "看到观众夸她「剧抛脸」「角色立住了」的每一个专业认可时刻", type: "A" },
+      { text: "每次她新造型出场，被她的好状态和绝佳审美狠狠惊艳的时候", type: "B" },
+      { text: "看到她和桐铃们双向奔赴、真诚互动的每一个热闹瞬间", type: "C" },
+      { text: "在疲惫的生活里，看到她清甜温暖的笑容被瞬间治愈的时候", type: "D" }
+    ]
+  }
+];
+
+const results = {
+  A: {
+    title: "显微镜级·细节控桐铃",
+    tags: ["#八倍镜追剧达人", "#剧抛脸品鉴家", "#余梦十级学者"],
+    praise: "你有一双最懂戏的眼睛！李一桐在《美人余》里藏在眼尾的一抹情绪、台词里的一声轻叹，都逃不过你的八倍镜。懂她的灵气，更懂她背后的琢磨与付出，有你这样超有深度的知音型桐铃，真的太让人骄傲啦！"
+  },
+  B: {
+    title: "神仙审美·颜值控桐铃",
+    tags: ["#人形截屏永动机", "#骨相美雷达", "#绝美氛围感捕手"],
+    praise: "你的审美简直和一桐的颜值一样能打！无论是《美人余》里的惊鸿一瞥，还是光影下的破碎感，你总能精准捕捉到每一帧神图。你用满满的爱意把那些闪闪发光的瞬间定格，你本人也一定是个热爱生活、极具美感的小可爱！"
+  },
+  C: {
+    title: "元气满格·气氛组桐铃",
+    tags: ["#金牌安利官", "#夸夸群荣誉群主", "#双向奔赴小太阳"],
+    praise: "你是桐铃大家庭里最清脆响亮的那颗铃铛！热情、真诚、永远充满活力，每次《美人余》更新，有你在的地方就有满满的排面与快乐。你毫无保留的偏爱与喝彩，就是吹向一桐最温暖的春风，今天也要为你自己鼓个掌呀！"
+  },
+  D: {
+    title: "温柔长情·陪伴系桐铃",
+    tags: ["#沉浸式追剧派", "#精神充电宝", "#细水长流守护者"],
+    praise: "你的喜欢就像温润的春茶，安静却极有力量。你会在《美人余》的故事里默默共情，也会在她明媚的笑容里收获治愈。不慌不忙，各自努力又彼此照亮，你这份温柔长情的陪伴，是时光里最动人的礼物。"
+  }
+};
+
+let currentQuestionIndex = 0;
+let scores = { A: 0, B: 0, C: 0, D: 0 };
+
+function startQuiz() {
+  currentQuestionIndex = 0;
+  scores = { A: 0, B: 0, C: 0, D: 0 };
+  document.getElementById('start-view').classList.add('hidden');
+  document.getElementById('result-view').classList.add('hidden');
+  document.getElementById('quiz-view').classList.remove('hidden');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const qData = questions[currentQuestionIndex];
+  const stepText = `QUESTION 0${currentQuestionIndex + 1}/0${questions.length}`;
+  const progressPercent = ((currentQuestionIndex + 1) / questions.length) * 100;
+
+  document.getElementById('q-step').innerText = stepText;
+  document.getElementById('progress-fill').style.width = `${progressPercent}%`;
+  document.getElementById('question-text').innerText = qData.q;
+
+  const optionsBox = document.getElementById('options-box');
+  optionsBox.innerHTML = '';
+
+  const letters = ['A', 'B', 'C', 'D'];
+  qData.options.forEach((opt, idx) => {
+    const btn = document.createElement('div');
+    btn.className = 'option-item';
+    btn.innerHTML = `<span class="option-letter">${letters[idx]}.</span><span>${opt.text}</span>`;
+    btn.onclick = () => selectOption(opt.type, btn);
+    optionsBox.appendChild(btn);
+  });
+}
+
+function selectOption(type, btnElement) {
+  const allOpts = document.querySelectorAll('.option-item');
+  allOpts.forEach(el => el.style.pointerEvents = 'none');
+  btnElement.classList.add('selected');
+
+  scores[type]++;
+
+  setTimeout(() => {
+    currentQuestionIndex++;
+    if (currentQuestionIndex < questions.length) {
+      renderQuestion();
+    } else {
+      showResult();
+    }
+  }, 240);
+}
+
+function showResult() {
+  document.getElementById('quiz-view').classList.add('hidden');
+  document.getElementById('result-view').classList.remove('hidden');
+
+  let maxType = 'A';
+  let maxScore = -1;
+  const order = ['A', 'B', 'C', 'D'];
+  
+  order.forEach(type => {
+    if (scores[type] > maxScore) {
+      maxScore = scores[type];
+      maxType = type;
+    }
+  });
+
+  const resData = results[maxType];
+  document.getElementById('res-title').innerText = resData.title;
+  document.getElementById('res-praise').innerText = resData.praise;
+
+  const tagsBox = document.getElementById('res-tags');
+  tagsBox.innerHTML = '';
+  resData.tags.forEach(t => {
+    const span = document.createElement('span');
+    span.className = 'tag';
+    span.innerText = t;
+    tagsBox.appendChild(span);
+  });
+}
+
+function resetQuiz() {
+  document.getElementById('result-view').classList.add('hidden');
+  document.getElementById('start-view').classList.remove('hidden');
+}
+</script>
+</body>
+</html>

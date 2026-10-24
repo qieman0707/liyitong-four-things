@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>《美人余》追剧喝水小助手</title>
+<style>
+  :root {
+    --bg-color: #FAF8F5;
+    --text-color: #1F1F1F;
+    --primary-color: #204E3A;
+    --primary-light: #356B53;
+    --card-bg: #FFFFFF;
+    --border-color: #E2DED5;
+    --muted-text: #7A756C;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 20px;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 28px;
+    line-height: 1.5;
+  }
+
+  .meta-line-1 {
+    font-size: 12px;
+    color: var(--muted-text);
+    letter-spacing: 1px;
+  }
+
+  .meta-line-2 {
+    font-size: 11px;
+    color: var(--muted-text);
+    opacity: 0.85;
+  }
+
+  main {
+    width: 100%;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+  }
+
+  .title-box {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  h1 {
+    font-size: 26px;
+    color: var(--primary-color);
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    margin-bottom: 6px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+    color: var(--muted-text);
+  }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 28px 24px;
+    width: 100%;
+    box-shadow: 0 8px 24px rgba(32, 78, 58, 0.04);
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .status-tag {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    background-color: #EBF2EE;
+    color: var(--primary-color);
+    margin-bottom: 16px;
+  }
+
+  .timer-display {
+    font-size: 56px;
+    font-weight: 700;
+    color: var(--primary-color);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 2px;
+    margin: 8px 0 24px;
+    line-height: 1;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 15px 24px;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    outline: none;
+    letter-spacing: 1px;
+  }
+
+  .btn-primary {
+    background-color: var(--primary-color);
+    color: #FFFFFF;
+    box-shadow: 0 4px 12px rgba(32, 78, 58, 0.2);
+  }
+
+  .btn-primary:active {
+    background-color: var(--primary-light);
+    transform: scale(0.98);
+  }
+
+  .btn-outline {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 1.5px solid var(--primary-color);
+  }
+
+  .btn-outline:active {
+    background-color: #EBF2EE;
+    transform: scale(0.98);
+  }
+
+  .stats-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px dashed var(--border-color);
+  }
+
+  .stats-label {
+    font-size: 15px;
+    color: var(--text-color);
+    font-weight: 500;
+  }
+
+  .stats-count {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 0 4px;
+  }
+
+  .cup-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+    min-height: 44px;
+    align-items: center;
+    justify-items: center;
+  }
+
+  .cup-item {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #EBF2EE;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-color);
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .cup-empty-hint {
+    grid-column: 1 / -1;
+    font-size: 13px;
+    color: var(--muted-text);
+  }
+
+  .action-row {
+    display: flex;
+    gap: 12px;
+  }
+
+  .btn-small {
+    padding: 11px 16px;
+    font-size: 14px;
+    border-radius: 10px;
+    flex: 1;
+  }
+
+  .btn-reset {
+    background-color: #F2EFE9;
+    color: var(--muted-text);
+    flex: 0.5;
+  }
+
+  .btn-reset:active {
+    background-color: #E5E0D8;
+  }
+
+  /* 弹窗样式 */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(31, 31, 31, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+
+  .modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .modal-box {
+    background-color: var(--bg-color);
+    border: 2px solid var(--primary-color);
+    border-radius: 24px;
+    padding: 32px 24px 24px;
+    width: 100%;
+    max-width: 320px;
+    text-align: center;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
+    transform: translateY(15px);
+    transition: transform 0.25s ease;
+  }
+
+  .modal-overlay.active .modal-box {
+    transform: translateY(0);
+  }
+
+  .modal-icon {
+    width: 56px;
+    height: 56px;
+    background-color: var(--primary-color);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 18px;
+  }
+
+  .modal-title {
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 12px;
+  }
+
+  .modal-text {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-color);
+    margin-bottom: 28px;
+  }
+
+  .modal-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  @keyframes popIn {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+  <header>
+    <div class="meta-line-1">AI 生成 · 桐铃 vibecoding</div>
+    <div class="meta-line-2">点子来自 @桐铃小陈</div>
+  </header>
+
+  <main>
+    <div class="title-box">
+      <h1>《美人余》茶水间</h1>
+      <div class="subtitle">好剧配好水 · 每 20 分钟温柔提醒</div>
+    </div>
+
+    <!-- 计时器卡片 -->
+    <div class="card">
+      <div class="status-tag" id="statusTag">准备就绪</div>
+      <div class="timer-display" id="timerDisplay">20:00</div>
+      <button class="btn btn-primary" id="startBtn" onclick="toggleTimer()">开始追剧</button>
+    </div>
+
+    <!-- 喝水记录卡片 -->
+    <div class="card">
+      <div class="stats-row">
+        <span class="stats-label">今日追剧已喝</span>
+        <div>
+          <span class="stats-count" id="cupCount">0</span>
+          <span class="stats-label">杯</span>
+        </div>
+      </div>
+
+      <div class="cup-grid" id="cupGrid">
+        <div class="cup-empty-hint">还没有喝水记录哦，先倒杯水吧~</div>
+      </div>
+
+      <div class="action-row">
+        <button class="btn btn-outline btn-small" onclick="addWater(1)">+ 自己喝了一杯</button>
+        <button class="btn btn-reset btn-small" onclick="resetWater()">重置</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- 提醒弹窗 -->
+  <div class="modal-overlay" id="remindModal">
+    <div class="modal-box">
+      <div class="modal-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 8h1a4 4 0 1 1 0 8h-1"></path>
+          <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path>
+          <line x1="6" y1="2" x2="6" y2="4"></line>
+          <line x1="10" y1="2" x2="10" y2="4"></line>
+          <line x1="14" y1="2" x2="14" y2="4"></line>
+        </svg>
+      </div>
+      <div class="modal-title">喝口水再看吧</div>
+      <div class="modal-text" id="remindText">《美人余》剧情再精彩，也别忘了润润嗓子呀！</div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" onclick="confirmDrink()">咕咚咕咚，喝完啦 (+1杯)</button>
+        <button class="btn btn-reset" style="width:100%" onclick="snoozeDrink()">正到精彩处，跳过这次</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 重置确认弹窗 -->
+  <div class="modal-overlay" id="resetModal">
+    <div class="modal-box">
+      <div class="modal-title">重置今日记录</div>
+      <div class="modal-text">确定要把今天喝水的杯数清零吗？</div>
+      <div class="modal-actions" style="flex-direction: row;">
+        <button class="btn btn-reset" style="flex:1" onclick="closeResetModal()">取消</button>
+        <button class="btn btn-primary" style="flex:1" onclick="confirmReset()">确定清零</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const INTERVAL_SECONDS = 20 * 60; // 20分钟
+  let isWatching = false;
+  let endTime = null;
+  let timerId = null;
+  let cups = 0;
+
+  const messages = [
+    "《美人余》剧情再精彩，也别忘了喝口温水润润嗓子呀！",
+    "叮！20分钟到啦，眼睛稍微离开屏幕，端起水杯抿一口吧~",
+    "桐铃温馨提醒：边看李一桐，边做水灵灵的追剧人，快喝水！",
+    "休息五秒钟，喝口水，缓缓神，接下来的剧情更带感！",
+    "水是美丽之源，看《美人余》的时候也要照顾好自己哦，干杯！",
+    "追剧投入是好事，但身体缺水可不行，快来打卡今天的水分指标~"
+  ];
+
+  const cupSvg = `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>`;
+
+  function init() {
+    const today = new Date().toLocaleDateString();
+    const savedDate = localStorage.getItem('mry_date');
+    const savedCups = localStorage.getItem('mry_cups');
+
+    if (savedDate === today && savedCups !== null) {
+      cups = parseInt(savedCups, 10) || 0;
+    } else {
+      localStorage.setItem('mry_date', today);
+      localStorage.setItem('mry_cups', '0');
+      cups = 0;
+    }
+    renderCups();
+  }
+
+  function saveCups() {
+    const today = new Date().toLocaleDateString();
+    localStorage.setItem('mry_date', today);
+    localStorage.setItem('mry_cups', cups.toString());
+  }
+
+  function renderCups() {
+    document.getElementById('cupCount').textContent = cups;
+    const grid = document.getElementById('cupGrid');
+    grid.innerHTML = '';
+
+    if (cups === 0) {
+      grid.innerHTML = '<div class="cup-empty-hint">还没有喝水记录哦，先倒杯水吧~</div>';
+      return;
+    }
+
+    for (let i = 0; i < cups; i++) {
+      const item = document.createElement('div');
+      item.className = 'cup-item';
+      item.innerHTML = cupSvg;
+      grid.appendChild(item);
+    }
+  }
+
+  function addWater(num) {
+    cups += num;
+    saveCups();
+    renderCups();
+  }
+
+  function resetWater() {
+    if (cups === 0) return;
+    document.getElementById('resetModal').classList.add('active');
+  }
+
+  function closeResetModal() {
+    document.getElementById('resetModal').classList.remove('active');
+  }
+
+  function confirmReset() {
+    cups = 0;
+    saveCups();
+    renderCups();
+    closeResetModal();
+  }
+
+  function toggleTimer() {
+    const startBtn = document.getElementById('startBtn');
+    const statusTag = document.getElementById('statusTag');
+
+    if (!isWatching) {
+      // 开始追剧
+      isWatching = true;
+      endTime = Date.now() + INTERVAL_SECONDS * 1000;
+      startBtn.textContent = '暂停追剧';
+      startBtn.classList.remove('btn-primary');
+      startBtn.classList.add('btn-outline');
+      statusTag.textContent = '沉浸追剧模式中...';
+      
+      updateTimerDisplay();
+      timerId = setInterval(checkTimer, 500);
+    } else {
+      // 停止追剧
+      stopTimer();
+    }
+  }
+
+  function stopTimer() {
+    isWatching = false;
+    clearInterval(timerId);
+    const startBtn = document.getElementById('startBtn');
+    const statusTag = document.getElementById('statusTag');
+    
+    startBtn.textContent = '开始追剧';
+    startBtn.classList.add('btn-primary');
+    startBtn.classList.remove('btn-outline');
+    statusTag.textContent = '已暂停提醒';
+    document.getElementById('timerDisplay').textContent = '20:00';
+  }
+
+  function checkTimer() {
+    if (!isWatching) return;
+    const now = Date.now();
+    const remaining = Math.ceil((endTime - now) / 1000);
+
+    if (remaining <= 0) {
+      clearInterval(timerId);
+      document.getElementById('timerDisplay').textContent = '00:00';
+      showRemindModal();
+    } else {
+      updateTimerDisplay(remaining);
+    }
+  }
+
+  function updateTimerDisplay(seconds = INTERVAL_SECONDS) {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    const formatted = 
+      String(mins).padStart(2, '0') + ':' + 
+      String(secs).padStart(2, '0');
+    document.getElementById('timerDisplay').textContent = formatted;
+  }
+
+  function showRemindModal() {
+    const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+    document.getElementById('remindText').textContent = randomMsg;
+    document.getElementById('remindModal').classList.add('active');
+  }
+
+  function restartCycle() {
+    document.getElementById('remindModal').classList.remove('active');
+    if (isWatching) {
+      endTime = Date.now() + INTERVAL_SECONDS * 1000;
+      updateTimerDisplay(INTERVAL_SECONDS);
+      timerId = setInterval(checkTimer, 500);
+    }
+  }
+
+  function confirmDrink() {
+    addWater(1);
+    restartCycle();
+  }
+
+  function snoozeDrink() {
+    restartCycle();
+  }
+
+  // 当页面从后台切回前台时，立即校准一次时间
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && isWatching) {
+      checkTimer();
+    }
+  });
+
+  init();
+</script>
+</body>
+</html>

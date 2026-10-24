@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>翻页讲稿 · 十五屏</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  html { scroll-snap-type: y mandatory; }
+  body { margin:0; }
+  main { max-width:none; padding:0; margin:0; }
+  .bar { position:fixed; top:0; left:0; right:0; z-index:5; display:flex; justify-content:space-between; align-items:center; padding:10px 24px; font-size:13px; color:var(--mute); background:linear-gradient(var(--paper), rgba(247,242,232,0)); }
+  .bar b { color:var(--ink); font-weight:600; }
+  .bar a { text-decoration:none; margin-left:16px; }
+  .s { min-height:100vh; scroll-snap-align:start; display:grid; grid-template-columns:1fr 340px; gap:40px; align-items:center; padding:56px 40px 40px; }
+  .s img { width:100%; max-height:84vh; object-fit:contain; object-position:top left; border:1px solid var(--line); border-radius:8px; background:#fff; display:block; }
+  .s .r { display:flex; flex-direction:column; gap:14px; }
+  .s .n { font-size:13px; color:var(--mute); letter-spacing:.08em; }
+  .s .n span { color:var(--dim); margin-left:8px; letter-spacing:0; }
+  .s .say { font-size:22px; line-height:1.55; font-weight:600; margin:0; max-width:none; }
+  .s .say.none { color:var(--dim); font-weight:400; font-size:17px; }
+  .s .do { font-size:14px; color:var(--mute); margin:0; padding-left:14px; border-left:2px solid var(--line); }
+  .s .do b { color:var(--ink); font-weight:600; }
+  .s .go { font-size:13px; }
+  .s .go a { color:var(--mark); text-decoration:none; border-bottom:1px solid var(--mark); }
+  .end { min-height:100vh; scroll-snap-align:start; display:flex; flex-direction:column; justify-content:center; padding:56px 40px; max-width:720px; }
+  .end p { max-width:none; }
+  @media (max-width:860px) { .s { grid-template-columns:1fr; align-items:start; gap:18px; padding-top:52px; } .s img { max-height:56vh; } .s .say { font-size:19px; } }
+</style>
+</head>
+<body>
+<main>
+  <div class="bar"><span><b>翻页讲稿</b> · 十五屏 · 左边是她看到的，右边是这一屏只说的那一句</span><span><span id="cnt">1 / 15</span><a href="index.html">三页</a><a href="../index.html" target="_blank">站点</a></span></div>
+
+  <section class="s" id="s1"><img src="img/讲稿/01.png" alt=""><div class="r"><div class="n">屏 1<span>三页 · 第一页</span></div><p class="say">「两样东西，左边卡片，右边积木。名字记住就行。」</p><p class="do">不说别的，翻页。</p><p class="go"><a href="index.html" target="_blank">打开这一页 →</a></p></div></section>
+
+  <section class="s" id="s2"><img src="img/讲稿/02.png" alt=""><div class="r"><div class="n">屏 2<span>第二页 · 一</span></div><p class="say">「去年陪她们玩过这个。她们还记得。」</p><p class="do">微博奇遇记那条。</p><p class="go"><a href="为什么.html" target="_blank">打开这一页 →</a></p></div></section>
+
+  <section class="s" id="s3"><img src="img/讲稿/03.png" alt=""><div class="r"><div class="n">屏 3<span>第二页 · 二</span></div><p class="say">「她们七月写的，一句没怪你。气的是没人回。」</p><p class="do">停两秒，翻。</p></div></section>
+
+  <section class="s" id="s4"><img src="img/讲稿/04.png" alt=""><div class="r"><div class="n">屏 4<span>第二页 · 三</span></div><p class="say none">先不说话，让她自己看完四个数。</p><p class="say">「一张『你是谁』的卡，就能有这么多人晒。」</p></div></section>
+
+  <section class="s" id="s5"><img src="img/讲稿/05.png" alt=""><div class="r"><div class="n">屏 5<span>第二页 · 四</span></div><p class="say">「这三个人没有自己做一行东西。他们只是出现，然后挑。」</p><p class="do">赵丽颖、扎克鸡、小猫补光灯。</p></div></section>
+
+  <section class="s" id="s6"><img src="img/讲稿/06.png" alt=""><div class="r"><div class="n">屏 6<span>第二页 · 五</span></div><p class="say">「窗口是这一个月。」</p><p class="do">翻到站点。</p></div></section>
+
+  <section class="s" id="s7"><img src="img/讲稿/07.png" alt=""><div class="r"><div class="n">屏 7<span>站点 · 桐铃小测试</span></div><p class="say">「你玩一次。」</p><p class="do"><b>她点</b>黑按钮「开始测试」，答八题。我闭嘴。</p><p class="go"><a href="../index.html#/quiz" target="_blank">打开真的 →</a></p></div></section>
+
+  <section class="s" id="s8"><img src="img/讲稿/08.png" alt=""><div class="r"><div class="n">屏 8<span>站点 · 结果卡</span></div><p class="say">「这就是粉丝拿到的。」</p><p class="do"><b>她点</b>「保存图片」。</p></div></section>
+
+  <section class="s" id="s9"><img src="img/讲稿/09.png" alt=""><div class="r"><div class="n">屏 9<span>站点 · 候选审核</span></div><p class="say">「这是你每周四的全部。挑一张。」</p><p class="do">三张初稿，每张下面「点头发布 / 打回重做」。<b>她点</b>。</p><p class="go"><a href="../index.html#/quiz/studio" target="_blank">打开真的 →</a></p></div></section>
+
+  <section class="s" id="s10"><img src="img/讲稿/10.png" alt=""><div class="r"><div class="n">屏 10<span>站点 · 做出来 · 被拦</span></div><p class="say">「写死的。」</p><p class="do"><b>我打</b>「用李一桐的声音哄睡」，点「真做出来」。屏幕出红叉：涉及女演员的声音，一律不做。</p><p class="go"><a href="../index.html#/vibe/build" target="_blank">打开真的 →</a></p></div></section>
+
+  <section class="s" id="s11"><img src="img/讲稿/11.png" alt=""><div class="r"><div class="n">屏 11<span>站点 · 做出来 · 真做</span></div><p class="say">「玩两下。」</p><p class="do"><b>她说</b>一句想要的，<b>我打</b>进去，点「真做出来」。等二十到五十秒，右边跑起来。这张截图是真跑出来的：44 行，54 秒。</p></div></section>
+
+  <section class="s" id="s12"><img src="img/讲稿/12.png" alt=""><div class="r"><div class="n">屏 12<span>站点 · 本周点名</span></div><p class="say">「这是你每周日的全部。」</p><p class="do">三个小玩意，每个旁边「点名」。<b>她点</b>，写一句话。</p><p class="go"><a href="../index.html#/vibe/pick" target="_blank">打开真的 →</a></p></div></section>
+
+  <section class="s" id="s13"><img src="img/讲稿/13.png" alt=""><div class="r"><div class="n">屏 13<span>第三页 · 分工表</span></div><p class="say">「你这行就这么多。下面两行是我的。」</p><p class="do">指着「女演员」那一行：不用准备 / 周四一下、周日一下 / 是。</p><p class="go"><a href="怎么做.html" target="_blank">打开这一页 →</a></p></div></section>
+
+  <section class="s" id="s14"><img src="img/讲稿/14.png" alt=""><div class="r"><div class="n">屏 14<span>第三页 · 跑多久、看什么</span></div><p class="say">「十二周，按月，随时停。看三个数。」</p></div></section>
+
+  <section class="s" id="s15"><img src="img/讲稿/15.png" alt=""><div class="r"><div class="n">屏 15<span>回到她刚存的那张结果卡</span></div><p class="say">「这周四发第一期。发不发，你说。」</p><p class="do">然后不说话。</p></div></section>
+
+  <section class="end">
+    <div class="k">用法</div>
+    <p>上下键或滑动翻页。每屏右边那一句说完就停，其余时间是她在看和点。十五屏说的话加起来不到三百字。</p>
+    <p>屏 7 到 12 是站点真机操作，当面演示前先在那台设备上接入 AI 钥匙（<a href="../index.html#/connect" target="_blank">接入</a>），带手机热点。屏 11 的「真做出来」要等二十到五十秒，等的时候不要讲话，让她看左边代码在滚。</p>
+    <p class="note">截图取自 2026-10-24 本地两件事版站点和三页；页面里的人数、留言都是演示假数据。红线：不用她的脸和声音；不碰她的工作；不收集粉丝个人信息。</p>
+    <div class="next"><a href="index.html">← 三页 · 第一页</a><a href="#s1">回到屏 1</a></div>
+  </section>
+</main>
+<script>
+  const S = [...document.querySelectorAll('.s')], cnt = document.getElementById('cnt');
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) cnt.textContent = (S.indexOf(e.target) + 1) + ' / ' + S.length; }), { threshold: .6 });
+  S.forEach(s => io.observe(s));
+  addEventListener('keydown', e => {
+    if (!['ArrowRight', 'ArrowLeft', 'PageDown', 'PageUp', ' '].includes(e.key)) return;
+    e.preventDefault();
+    const all = [...S, document.querySelector('.end')];
+    const i = all.findIndex(s => s.getBoundingClientRect().top > -10);
+    const j = ['ArrowRight', 'PageDown', ' '].includes(e.key) ? Math.min(all.length - 1, i + 1) : Math.max(0, i - 1);
+    all[j].scrollIntoView({ behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>
