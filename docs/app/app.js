@@ -76,7 +76,8 @@ const App = (() => {
   const products = {};
   const ALL = ['radar', 'replies', 'quiz', 'vibe'];
   /* 暂时关闭的产品（2026-10-24 他定：先只留 3 小测试、4 vibecoding）。代码全保留，恢复时从这里删掉即可 */
-  const OFF = ['radar', 'replies'];
+  /* 地址带 ?all（如 index.html?all#/radar）时四件全开，给「产品展示」页用 */
+  const OFF = /[?&]all\b/.test(location.search) ? [] : ['radar', 'replies'];
   const ORDER = ALL.filter(id => !OFF.includes(id));
   const register = p => { products[p.id] = p; };
   const live = () => ORDER.filter(k => products[k]);
